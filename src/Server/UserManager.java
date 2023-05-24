@@ -1,3 +1,7 @@
+package Server;
+
+import Model.*;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.*;
@@ -49,7 +53,7 @@ public class UserManager {
     }
 
     public static boolean checkSignUp() {
-
+        return false;
     }
     public static void signUp(User user) throws IOException {
         users.put(user.getUsername(), user);

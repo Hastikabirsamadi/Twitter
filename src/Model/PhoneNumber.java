@@ -1,3 +1,5 @@
+package Model;
+
 public class PhoneNumber {
 
     private String code;
