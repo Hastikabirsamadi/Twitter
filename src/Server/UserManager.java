@@ -3,6 +3,8 @@ package Server;
 import Model.*;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.regex.*;
 
@@ -33,11 +35,11 @@ public class UserManager {
         }
         return true;
     }
-    private static boolean checkPhoneNumberLength(PhoneNumber phoneNumber) {
+    private static boolean checkPhoneNumberLength(String phoneNumber) {
 
-        return phoneNumber.getNumber().length() == 10;
+        return phoneNumber.length() == 10;
     }
-    private static boolean checkPhoneNumberDuplication(PhoneNumber phoneNumber) {
+    private static boolean checkPhoneNumberDuplication(String phoneNumber) {
         for(User user : users.values()) {
             if(user.getPhoneNumber().equals(phoneNumber)) {
                 return false;
@@ -52,8 +54,17 @@ public class UserManager {
         return password.matches(".*[A-Z].*") && password.matches(".*[a-z].*");
     }
 
-    public static boolean checkSignUp() {
-        return false;
+    public static boolean checkSignUp(User user, ObjectInputStream in, ObjectOutputStream out) {
+        if(!checkUserNameDuplication(user.getUsername())) {
+            throw new IllegalArgumentException("This username is already taken!");
+        }
+        if(!checkEmailDuplication(user.getEmail())) {
+            throw new IllegalArgumentException("This username is already taken!");
+        }
+        if(!checkPhoneNumberDuplication(user.getPhoneNumber())) {
+            throw new IllegalArgumentException("This phone number is already taken!");
+        }
+        return true;
     }
     public static void signUp(User user) throws IOException {
         users.put(user.getUsername(), user);
