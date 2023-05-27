@@ -1,11 +1,12 @@
 package Model;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
 
     //ya email ya phoneNumber bayad bashe
     private String username;
@@ -13,20 +14,20 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private PhoneNumber phoneNumber;
+    private String phoneNumber;
     private String country;
     private Date birthDate;
     private LocalDate signupDate;
     private Date lastModificationDate;
 
-    public User(String username, String password, String firstName, String lastName, String email, String phoneCode, String phoneNumber,
+    public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
                 String country, String birthDate) throws ParseException {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.phoneNumber = new PhoneNumber(phoneCode, phoneNumber);
+        this.phoneNumber = phoneNumber;
         this.country = country;
         this.birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(birthDate);
         this.signupDate = LocalDate.now();
@@ -72,11 +73,11 @@ public class User {
         this.email = email;
     }
 
-    public PhoneNumber getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(PhoneNumber phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

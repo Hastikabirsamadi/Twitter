@@ -1,5 +1,7 @@
 package Server;
 
+import Model.User;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Server implements Runnable{
+public class Server implements Runnable {
 
     private ServerSocket serverSocket;
     private ArrayList<ClientHandler> clientHandlers;
@@ -38,37 +40,9 @@ public class Server implements Runnable{
         }
     }
 
-    class ClientHandler implements Runnable {
-
-        private Socket client;
-        private ObjectInputStream in;
-        private ObjectOutputStream out;
-
-        public ClientHandler(Socket client) {
-            this.client = client;
-        }
-        @Override
-        public void run() {
-            try {
-                in = new ObjectInputStream(client.getInputStream());
-                out = new ObjectOutputStream(client.getOutputStream());
-                out.writeObject(UserManager.showMenu());
-                String choice;
-                while (true) {
-                    choice = (String)in.readObject();
-                    switch (choice) {
-                        case "1" -> {
-
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                //TODO: handle later
-            } catch (ClassNotFoundException e) {
-                //TODO: handle later
-                //throw new RuntimeException(e);
-            }
-        }
-
+    public static void main(String[] args) {
+        Server server = new Server();
+        server.run();
     }
 }
+
