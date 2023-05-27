@@ -1,10 +1,14 @@
 package Client;
 
+import Model.User;
+import Server.UserManager;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.regex.*;
 
 public class Client implements Runnable {
     private Socket client;
@@ -54,10 +58,17 @@ public class Client implements Runnable {
         @Override
         public void run() {
             try {
+                Scanner scanner = new Scanner(System.in);
                 while (!done) {
-                    Scanner scanner = new Scanner(System.in);
+                    ClientUserManager.showMenu();
                     String message = scanner.nextLine();
-                    if (message.equals("quit")) {
+                    if (message.equals("1")){
+                        out.writeObject("1");
+                        System.out.println("Please enter your user name:");
+                        String userName = scanner.nextLine();
+                        out.writeObject(userName);
+                    }
+                    else if (message.equals("3")) {
                         shutdown();
                     } else {
                         out.writeObject(message);
@@ -72,6 +83,7 @@ public class Client implements Runnable {
             }
         }
     }
+
     public static void main(String[] args){
         Client client = new Client();
         client.run();
