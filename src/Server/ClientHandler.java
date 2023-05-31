@@ -56,6 +56,10 @@ public class ClientHandler implements Runnable {
                             break;
                         }
                     }
+                    else if(userChoice.equals("2")) {
+                        System.out.println("user is signing in...");
+
+                    }
                 } catch (IllegalArgumentException e) {
                     e.printStackTrace();
                     System.out.println(e.getMessage());

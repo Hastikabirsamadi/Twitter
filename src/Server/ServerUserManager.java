@@ -53,6 +53,14 @@ public class ServerUserManager {
         }
         return true;
     }
+    private static boolean checkPreviousSignUp(User user) {
+        for(User temp : users.values()) {
+            if(temp.equals(user)) {
+                return false;
+            }
+        }
+        return true;
+    }
     public static boolean checkSignUp(User user, ObjectOutputStream out) {
         try {
             if (!checkUserNameDuplication(user.getUsername())) {
@@ -67,6 +75,10 @@ public class ServerUserManager {
                 out.writeObject("This phone number is already taken!");
                 return false;
             }
+            if(!checkPreviousSignUp(user)) {
+                out.writeObject("User has already signed up!");
+                return false;
+            }
             return true;
         } catch(IOException e) {
             e.printStackTrace();
@@ -75,6 +87,7 @@ public class ServerUserManager {
         }
     }
     public static void signUp(User user) throws IOException {
+
         users.put(user.getUsername(), user);
     }
 

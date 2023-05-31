@@ -19,6 +19,8 @@ public class User implements Serializable {
     private Date birthDate;
     private LocalDate signupDate;
     private Date lastModificationDate;
+    private boolean SignedUp;
+    private boolean SignedIn;
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
                 String country, String birthDate) throws ParseException {
@@ -31,6 +33,8 @@ public class User implements Serializable {
         this.country = country;
         this.birthDate = new SimpleDateFormat("yyyy-MM-dd").parse(birthDate);
         this.signupDate = LocalDate.now();
+        this.SignedUp = false;
+        this.SignedIn = false;
     }
 
     public String getUsername() {
@@ -111,5 +115,21 @@ public class User implements Serializable {
 
     public void setLastModificationDate(Date lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
+    }
+
+    public boolean isSignedUp() {
+        return SignedUp;
+    }
+
+    public void setSignedUp(boolean signedUp) {
+        SignedUp = signedUp;
+    }
+
+    public boolean isSignedIn() {
+        return SignedIn;
+    }
+
+    public void setSignedIn(boolean signedIn) {
+        SignedIn = signedIn;
     }
 }
