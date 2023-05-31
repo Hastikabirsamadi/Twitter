@@ -91,6 +91,10 @@ public class ServerUserManager {
         users.put(user.getUsername(), user);
     }
 
+    public static boolean checkSignIn() {
+
+    }
+
     public static HashMap<String, User> getUsers() {
         return users;
     }
