@@ -1,11 +1,12 @@
 package Model;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
 
     //ya email ya phoneNumber bayad bashe
     private String username;

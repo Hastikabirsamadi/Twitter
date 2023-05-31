@@ -2,7 +2,7 @@ package Model;
 
 import java.time.LocalDate;
 
-public class Message {
+public class Tweet {
     private int likes;
     private int retweets;
     private int comments;
@@ -10,7 +10,7 @@ public class Message {
     private LocalDate currentTime;
     private String hashtag;
 
-    public Message(int likes, int retweets, int comments, String hashtag) {
+    public Tweet(int likes, int retweets, int comments, String hashtag) {
         this.likes = likes;
         this.retweets = retweets;
         this.comments = comments;
