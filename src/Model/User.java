@@ -21,7 +21,7 @@ public class User implements Serializable {
     private Date lastModificationDate;
     private boolean SignedUp;
     private boolean SignedIn;
-    private PersonalInfo personalInfo;
+    private Bio bio;
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
                 String country, String birthDate) throws ParseException {
@@ -43,8 +43,8 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public void setPersonalInfo(String webSite, String location, StringBuilder bio) {
-        this.personalInfo = new PersonalInfo(webSite, location, bio);
+    public void setBio(StringBuilder webSite, String location, StringBuilder details) {
+        this.bio = new Bio(webSite, location, details);
     }
     public String getUsername() {
         return username;
