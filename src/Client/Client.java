@@ -16,11 +16,8 @@ public class Client {
     private static Thread clientReceiverThread;
     private static Scanner scanner;
     private static User user;
-    private static boolean done;
-
-    public Client() {
-        done = false;
-    }
+    private static boolean done = false;
+    private static boolean flag = false;
 
     public static void signUp() throws ParseException, IOException, InterruptedException, ClassNotFoundException {
         while (true) {
@@ -77,11 +74,13 @@ public class Client {
                 Thread.sleep(500);
                 out.writeObject(user);
                 Thread.sleep(500);
-                String temp = in.readObject().toString();
-                System.out.println(temp);
+                String temp = (String) in.readObject();
+                //System.out.println(temp);
                 if (temp.equals("signed up successfully!")) {
+                    System.out.println(temp);
                     break;
                 }
+                System.out.println(temp);
             }
             catch (IllegalArgumentException e){
                 System.out.println(e.getMessage());
@@ -96,7 +95,7 @@ public class Client {
             String userName = scanner.nextLine();
             System.out.print("password: ");
             String pass = scanner.nextLine();
-            //user = new User(userName, pass);
+            user = new User(userName, pass);
             try {
                 out.writeObject("2");
                 out.writeObject(user);
@@ -107,7 +106,7 @@ public class Client {
                     break;
                 }
                 else if (temp.equals("signed in successfully!")){
-                    ClientUserManager.showMainMenu();
+                    flag = true;
                     break;
                }
             }
@@ -152,7 +151,9 @@ public class Client {
                     }
                     else if (choice.equals("2")){
                         signIn();
-                        break;
+                        if (flag){
+                            break;
+                        }
                     }
                     else if (choice.equals("3")){
                         out.writeObject(choice);
@@ -163,6 +164,7 @@ public class Client {
                 }
                 while (true){
                     ClientUserManager.showMainMenu();
+                    break outer;
                 }
             }
         }

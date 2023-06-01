@@ -38,6 +38,11 @@ public class User implements Serializable {
         this.SignedIn = false;
     }
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public void setBio(StringBuilder webSite, String location, StringBuilder details) {
         this.bio = new Bio(webSite, location, details);
     }
