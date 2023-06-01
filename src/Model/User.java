@@ -21,6 +21,7 @@ public class User implements Serializable {
     private Date lastModificationDate;
     private boolean SignedUp;
     private boolean SignedIn;
+    private Bio bio;
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
                 String country, String birthDate) throws ParseException {
@@ -37,6 +38,9 @@ public class User implements Serializable {
         this.SignedIn = false;
     }
 
+    public void setBio(StringBuilder webSite, String location, StringBuilder details) {
+        this.bio = new Bio(webSite, location, details);
+    }
     public String getUsername() {
         return username;
     }

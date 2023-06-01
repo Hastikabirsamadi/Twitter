@@ -12,7 +12,7 @@ public class ServerUserManager {
     Scanner scanner = new Scanner(System.in);
 
     public static void readFile() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("note.bin"))) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("users.bin"))) {
             users = (HashMap<String, User>) objectInputStream.readObject();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -23,7 +23,7 @@ public class ServerUserManager {
         }
     }
     public static void writeFile(HashMap<String, User> users) {
-       try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("note.bin"))) {
+       try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("users.bin"))) {
            objectOutputStream.writeObject(users);
        }
        catch(FileNotFoundException e ) {
@@ -107,7 +107,7 @@ public class ServerUserManager {
                 return false;
             }
             if(!checkPassword(user.getUsername(), user.getPassword())) {
-                out.writeObject("You have entered wrong password!");
+                out.writeObject("Wrong pass!");
                 return false;
             }
             return true;

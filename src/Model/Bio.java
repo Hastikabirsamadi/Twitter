@@ -3,9 +3,9 @@ package Model;
 public class Bio {
     private StringBuilder website;
     private String location;
-    private String details;
+    private StringBuilder details;
 
-    public Bio(StringBuilder website, String location, String details) {
+    public Bio(StringBuilder website, String location, StringBuilder details) {
         this.website = website;
         this.location = location;
         this.details = details;
@@ -27,11 +27,11 @@ public class Bio {
         this.location = location;
     }
 
-    public String getDetails() {
+    public StringBuilder getDetails() {
         return details;
     }
 
-    public void setDetails(String details) {
+    public void setDetails(StringBuilder details) {
         this.details = details;
     }
 }

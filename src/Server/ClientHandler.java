@@ -44,6 +44,7 @@ public class ClientHandler implements Runnable {
                     if (userChoice.equals("3")) {
                         ServerUserManager.writeFile(ServerUserManager.getUsers());
                         exit();
+                        break outer;
                     }
                     if (userChoice.equals("1")) {
                         System.out.println("user is signing up...");
