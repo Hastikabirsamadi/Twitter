@@ -91,8 +91,37 @@ public class ServerUserManager {
         users.put(user.getUsername(), user);
     }
 
-    public static boolean checkSignIn() {
+    public static  boolean checkPassword(String username, String password) {
+        for(User user : users.values()) {
+            if(user.getUsername().equals(username)) {
+                if(user.getPassword().equals(password)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
+    public static boolean checkSignIn(User user, ObjectOutputStream out) {
+        try {
+            if (checkUserNameDuplication(user.getUsername())) {
+                out.writeObject("You haven't signed up yet!");
+                return false;
+            }
+            if(!checkPassword(user.getUsername(), user.getPassword())) {
+                out.writeObject("You have entered wrong password!");
+                return false;
+            }
+            return true;
+        } catch(IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static void signIn(User user) {
+        user.setSignedIn(true);
     }
 
     public static HashMap<String, User> getUsers() {
