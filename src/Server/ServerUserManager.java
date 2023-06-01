@@ -5,7 +5,6 @@ import Model.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.regex.*;
 
 public class ServerUserManager {
 
@@ -87,7 +86,6 @@ public class ServerUserManager {
         }
     }
     public static void signUp(User user) throws IOException {
-
         users.put(user.getUsername(), user);
     }
 
@@ -117,9 +115,11 @@ public class ServerUserManager {
             e.printStackTrace();
             return false;
         }
-
     }
 
+//    private static boolean checkIfLoggedIn() { // used for checking if user has logged in
+//
+//    }
     public static void signIn(User user) {
         user.setSignedIn(true);
     }
