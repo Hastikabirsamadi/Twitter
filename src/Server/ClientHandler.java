@@ -1,4 +1,5 @@
 package Server;
+import Model.PersonalInfo;
 import Model.User;
 
 import java.io.IOException;
@@ -82,6 +83,18 @@ public class ClientHandler implements Runnable {
                     //TODO: handle later
                     e.printStackTrace();
                     //throw new RuntimeException(e);
+                }
+            }
+            while (true) {
+                try {
+                    System.out.println("getting user's choice after sign in and sign up :)");
+                    userChoice = (String) in.readObject();
+                    if(userChoice.equals("1")) {
+                        System.out.println("user is adding bio...");
+                        PersonalInfo bio
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
