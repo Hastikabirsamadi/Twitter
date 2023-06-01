@@ -48,7 +48,6 @@ public class ClientHandler implements Runnable {
                     if (userChoice.equals("1")) {
                         System.out.println("user is signing up...");
                         user = (User) in.readObject();
-                        System.out.println(user.toString());
                         if (ServerUserManager.checkSignUp(user, out)) {
                             ServerUserManager.signUp(user);
                             System.out.println("user " + user.getUsername() + " signed up successfully :)");
@@ -58,7 +57,13 @@ public class ClientHandler implements Runnable {
                     }
                     else if(userChoice.equals("2")) {
                         System.out.println("user is signing in...");
-
+                        user = (User) in.readObject();
+                        if(ServerUserManager.checkSignIn(user, out)) {
+                            ServerUserManager.signIn(user);
+                            System.out.println("user '" + user.getUsername() + "' signed in successfully :)");
+                            out.writeObject("signed in successfully!");
+                            break;
+                        }
                     }
                 } catch (IllegalArgumentException e) {
                     e.printStackTrace();
