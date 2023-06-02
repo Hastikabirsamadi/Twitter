@@ -43,7 +43,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public void setPersonalInfo(StringBuilder webSite, String location, StringBuilder bio) {
+    public void setPersonalInfo(String webSite, String location, StringBuilder bio) {
         this.personalInfo = new PersonalInfo(webSite, location, bio);
     }
     public String getUsername() {

@@ -17,7 +17,8 @@ public class Client {
     private static Scanner scanner;
     private static User user;
     private static boolean done = false;
-    private static boolean flag = false;
+    private static boolean isSignIn = false;
+    private static boolean isSignUP = false;
 
     public static void signUp() throws ParseException, IOException, InterruptedException, ClassNotFoundException {
         while (true) {
@@ -25,29 +26,60 @@ public class Client {
                 String phone = null, email = null;
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("please enter your information");
+                System.out.println("write 'exit' in any field to exit");
                 System.out.print("Username: ");
                 String userName = scanner.nextLine();
+                if (userName.equals("exit")){
+                    return;
+                }
                 System.out.print("firstname: ");
                 String name = scanner.nextLine();
+                if (name.equals("exit")){
+                    return;
+                }
                 System.out.print("last name: ");
                 String lastName = scanner.nextLine();
+                if (lastName.equals("exit")){
+                    return;
+                }
                 System.out.print("email or phone number: ");
                 String emailOrNumber = scanner.nextLine();
+                if (emailOrNumber.equals("exit")){
+                    return;
+                }
                 System.out.print("password: ");
                 String pass = scanner.nextLine();
+                if (pass.equals("exit")){
+                    return;
+                }
                 System.out.print("repeat your password: ");
                 String passRepetition = scanner.nextLine();
+                if (passRepetition.equals("exit")){
+                    return;
+                }
                 ClientUserManager.showCountries();
                 System.out.println();
                 System.out.print("please enter the number of your country: ");
                 String num = scanner.nextLine();
+                if (num.equals("exit")){
+                    return;
+                }
                 String country = ClientUserManager.getCountry(num);
                 System.out.print("Birth day: ");
                 String day = scanner.nextLine();
+                if (day.equals("exit")){
+                    return;
+                }
                 System.out.print("Birth month: ");
                 String month = scanner.nextLine();
+                if (month.equals("exit")){
+                    return;
+                }
                 System.out.print("Birth year: ");
                 String year = scanner.nextLine();
+                if (year.equals("exit")){
+                    return;
+                }
                 String birthDate = year + "-" + month + "-" + day;
                 if (ClientUserManager.checkEmailFormat(emailOrNumber)) {
                     email = emailOrNumber;
@@ -77,6 +109,7 @@ public class Client {
                 String temp = (String) in.readObject();
                 if (temp.equals("signed up successfully!")) {
                     System.out.println(temp);
+                    isSignUP = true;
                     break;
                 }
                 System.out.println(temp);
@@ -90,10 +123,17 @@ public class Client {
     public static void signIn() throws ParseException {
         while (true) {
             System.out.println("Please enter your information to sign in:");
+            System.out.println("write 'exit' in any field to exit");
             System.out.print("username: ");
             String userName = scanner.nextLine();
+            if (userName.equals("exit")){
+                return;
+            }
             System.out.print("password: ");
             String pass = scanner.nextLine();
+            if (pass.equals("exit")){
+                return;
+            }
             user = new User(userName, pass);
             try {
                 out.writeObject("2");
@@ -105,7 +145,7 @@ public class Client {
                     break;
                 }
                 else if (temp.equals("signed in successfully!")){
-                    flag = true;
+                    isSignIn = true;
                     break;
                }
             }
@@ -146,11 +186,13 @@ public class Client {
                     String choice = scanner.nextLine();
                     if (choice.equals("1")) {
                         signUp();
-                        break;
+                        if (isSignUP) {
+                            break;
+                        }
                     }
                     else if (choice.equals("2")){
                         signIn();
-                        if (flag){
+                        if (isSignIn){
                             break;
                         }
                     }
@@ -165,8 +207,16 @@ public class Client {
                     ClientUserManager.showMainMenu();
                     String choice2 = scanner.nextLine();
                     if (choice2.equals("1")){
-                        ClientUserManager.addInfo(out);
-                        break outer;
+                        System.out.println((in.readObject()).toString());
+                        System.out.println("Do you want to edit your personal info?");
+                        System.out.println("1.yes");
+                        System.out.println("2.NO");
+                        String ans = scanner.nextLine();
+                        out.writeObject(ans);
+                        if (ans.equals("1")) {
+                            ClientUserManager.addInfo(out, in);
+                        }
+                           continue;
                     }
                     //break outer;
                 }

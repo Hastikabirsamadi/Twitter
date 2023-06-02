@@ -3,7 +3,6 @@ package Client;
 import Model.PersonalInfo;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -12,6 +11,7 @@ import java.util.regex.Pattern;
 public class ClientUserManager {
     private static HashMap<String,String> countries = new HashMap<>();
     private static Scanner input = new Scanner(System.in);
+    private static boolean flag = false;
     //ArrayList<User> users = new ArrayList<>();
     public static void showMenu() {
         System.out.println("""
@@ -24,12 +24,13 @@ public class ClientUserManager {
     public static void showMainMenu(){
         System.out.println("""
                 Please choose an option :\s
-                1.Bio
+                1.Profile
                 2.Search
                 3.Timeline
                 4.Tweet
                 """);
     }
+
 
     public static boolean checkEmailFormat (String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
@@ -76,8 +77,10 @@ public class ClientUserManager {
         return "try again";
     }
 
-    public static void addInfo(ObjectOutputStream out) throws IOException {
-        System.out.println("please complete your personal information:");
+    public static void addInfo(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException, InterruptedException {
+        System.out.println("please complete or edit your personal information:");
+        System.out.println("write '-' if you want to leave the field empty");
+        System.out.println("write 'exit' in any field to exit");
         System.out.println("Bio (write 'finish' to finish) :");
         StringBuilder bio = new StringBuilder();
         String temp = " ";
@@ -102,11 +105,23 @@ public class ClientUserManager {
 //             }
 //             bioChars = bioChars.add();
 //             temp = new String(bioChars);
+        if (bio.equals("exit")){
+            return;
+        }
         System.out.println("Location:");
         String location = input.nextLine();
+        if (location.equals("exit")){
+            return;
+        }
         System.out.println("Website:");
         String website = input.nextLine();
+        if (website.equals("exit")){
+            return;
+        }
         PersonalInfo personalInfo = new PersonalInfo(website, location, bio);
         out.writeObject(personalInfo);
+        Thread.sleep(300);
+        String res = (String) in.readObject();
+        System.out.println(res);
     }
 }
