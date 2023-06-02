@@ -10,7 +10,7 @@ public class ServerThread extends Thread{
 
     @Override
     public void run() {
-        ServerSocket serverSocket = null;
+        ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(9999);
             System.out.println("Server is running on port 9999");

@@ -49,9 +49,10 @@ public class ClientHandler implements Runnable {
                     }
                     if (userChoice.equals("1")) {
                         System.out.println("user is signing up...");
-                        user = (User) in.readObject();
+                        User tempUser = (User) in.readObject();
                         if (ServerUserManager.checkSignUp(user, out)) {
                             ServerUserManager.signUp(user);
+                            user = tempUser;
                             System.out.println("user " + user.getUsername() + " signed up successfully :)");
                             out.writeObject("signed up successfully!");
                             break;
@@ -59,9 +60,10 @@ public class ClientHandler implements Runnable {
                     }
                     else if(userChoice.equals("2")) {
                         System.out.println("user is signing in...");
-                        user = (User) in.readObject();
+                        User tempUser = (User) in.readObject();
                         if(ServerUserManager.checkSignIn(user, out)) {
                             ServerUserManager.signIn(user);
+                            user = ServerUserManager.getUsers().get(tempUser.getUsername());
                             System.out.println("user '" + user.getUsername() + "' signed in successfully :)");
                             out.writeObject("signed in successfully!");
                             break;
@@ -91,7 +93,16 @@ public class ClientHandler implements Runnable {
                     userChoice = (String) in.readObject();
                     if(userChoice.equals("1")) {
                         System.out.println("user is adding bio...");
-                        PersonalInfo bio
+                        out.writeObject(user.getPersonalInfo());
+                        System.out.println("user's personal info is sent :)");
+                        String editAnswer = (String) in.readObject();
+                        if(editAnswer.equals("1")) {
+                            PersonalInfo info = (PersonalInfo) in.readObject();
+                            user.setPersonalInfo(info);
+                            System.out.println("user '" + user.getUsername() + "' changed their personal info");
+                            out.writeObject("Personal info edited successfully!");
+                        }
+                        continue;
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);

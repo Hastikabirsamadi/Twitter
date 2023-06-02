@@ -121,7 +121,11 @@ public class ServerUserManager {
 //
 //    }
     public static void signIn(User user) {
-        user.setSignedIn(true);
+        for(User user1 : users.values()) {
+            if(user.equals(user1)) {
+                user1.setSignedIn(true);
+            }
+        }
     }
 
     public static HashMap<String, User> getUsers() {
