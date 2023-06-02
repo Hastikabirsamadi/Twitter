@@ -1,6 +1,7 @@
 package Client;
 
 import Model.PersonalInfo;
+import Model.Tweet;
 
 import java.io.*;
 import java.util.HashMap;
@@ -84,6 +85,8 @@ public class ClientUserManager {
         System.out.println("write 'exit' in any field to exit");
         System.out.println("Bio (write 'finish' to finish) :");
         StringBuilder bio;
+        String location = "-";
+        String website = "-";
         while (true) {
             bio = new StringBuilder();
             String temp = " ";
@@ -101,22 +104,59 @@ public class ClientUserManager {
             break;
         }
         if (bio.toString().equals("exit\n")){
+            out.writeObject("exit");
             return;
         }
         System.out.println("Location:");
-        String location = input.nextLine();
+        location = input.nextLine();
         if (location.equals("exit")){
+            out.writeObject("exit");
             return;
         }
         System.out.println("Website:");
-        String website = input.nextLine();
+        website = input.nextLine();
         if (website.equals("exit")){
+            out.writeObject("exit");
             return;
         }
+        out.writeObject("ok");
         PersonalInfo personalInfo = new PersonalInfo(website, location, bio);
         out.writeObject(personalInfo);
         Thread.sleep(300);
         String res = (String) in.readObject();
         System.out.println(res);
+    }
+
+    public static void addTweet(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException {
+        System.out.println("Please enter your tweet:");
+        System.out.println("write 'exit' to exit");
+        System.out.println("write 'finish' to finish the tweet:");
+        StringBuilder body;
+        while (true) {
+            body = new StringBuilder();
+            String temp = " ";
+            while (!temp.equals("finish")) {
+                temp = input.nextLine();
+                if (!temp.equals("finish")) {
+                    body.append(temp);
+                    body.append('\n');
+                }
+            }
+            if (body.length() > 280) {
+                System.out.println("Your tweet has more than 280 characters!!!");
+                System.out.println("Try again!");
+                continue;
+            }
+            break;
+        }
+        if (body.toString().equals("exit\n")){
+            out.writeObject("exit");
+            return;
+        }
+        out.writeObject("ok");
+        Tweet tweet = new Tweet(body, 0,0,0);
+        out.writeObject(tweet);
+        in.readObject();
+        System.out.println(in.readObject().toString());
     }
 }

@@ -217,9 +217,12 @@ public class Client {
                         if (ans.equals("1")) {
                             ClientUserManager.addInfo(out, in);
                         }
-                           continue;
                     }
-                    if (choice2.equals("5")){
+                    else if (choice2.equals("4")){
+                        out.writeObject(choice2);
+                        ClientUserManager.addTweet(out,in);
+                    }
+                    else if (choice2.equals("5")){
                         out.writeObject(choice2);
                         break;
                     }
