@@ -83,21 +83,22 @@ public class ClientUserManager {
         System.out.println("write '-' if you want to leave the field empty");
         System.out.println("write 'exit' in any field to exit");
         System.out.println("Bio (write 'finish' to finish) :");
-        StringBuilder bio = new StringBuilder();
-        String temp = " ";
-        int counter = 0;
-        while (!temp.equals("finish")) {
-            temp = input.nextLine();
-            counter += temp.length();
-            if (temp.length() > 160) {
-                System.out.println("you can at last enter 160 characters!!!");
-                System.out.println("Try again!");
+        StringBuilder bio;
+        while (true) {
+            bio = new StringBuilder();
+            String temp = " ";
+            while (!temp.equals("finish")) {
+                temp = input.nextLine();
+                if (!temp.equals("finish")) {
+                    bio.append(temp);
+                    bio.append('\n');
+                }
+            }
+            if (bio.length() > 160) {
+                System.out.println("You can at last enter 160 characters!!!");
                 continue;
             }
-            if (!temp.equals("finish")) {
-                bio.append(temp);
-                bio.append('\n');
-            }
+            break;
         }
 //        ArrayList<Character> bioChars = new ArrayList<>();
 //         while (bioChars.size() <= 160) {
@@ -106,7 +107,7 @@ public class ClientUserManager {
 //             }
 //             bioChars = bioChars.add();
 //             temp = new String(bioChars);
-        if (bio.equals("exit\nfinish")){
+        if (bio.toString().equals("exit\n")){
             return;
         }
         System.out.println("Location:");

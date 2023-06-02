@@ -97,8 +97,9 @@ public class ClientHandler implements Runnable {
                         System.out.println("user's personal info is sent :)");
                         String editAnswer = (String) in.readObject();
                         if(editAnswer.equals("1")) {
-                            PersonalInfo info = (PersonalInfo) in.readObject();
-                            user.setPersonalInfo(info);
+                            String info = (String) in.readObject();
+                            System.out.println(info);
+                           // user.setPersonalInfo(info);
                             System.out.println("user '" + user.getUsername() + "' changed their personal info");
                             out.writeObject("Personal info edited successfully!");
                         }
