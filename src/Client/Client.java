@@ -209,13 +209,14 @@ public class Client {
                     if (choice2.equals("1")){
                         out.writeObject(choice2);
                         System.out.println((in.readObject()).toString());
-                        System.out.println("Do you want to edit your personal info?");
-                        System.out.println("1.yes");
-                        System.out.println("2.NO");
+                        ClientUserManager.showProfileMenu();
                         String ans = scanner.nextLine();
                         out.writeObject(ans);
                         if (ans.equals("1")) {
                             ClientUserManager.addInfo(out, in);
+                        }
+                        else if (ans.equals("2")){
+
                         }
                     }
                     else if (choice2.equals("4")){

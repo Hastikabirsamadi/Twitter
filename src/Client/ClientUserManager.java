@@ -33,6 +33,14 @@ public class ClientUserManager {
                 """);
     }
 
+    public static void showProfileMenu(){
+        System.out.println("""
+                Please choose an option :\s
+                1.Edit personal info
+                2.Show tweets
+                """);
+    }
+
 
     public static boolean checkEmailFormat (String email) {
         String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
@@ -127,7 +135,7 @@ public class ClientUserManager {
         System.out.println(res);
     }
 
-    public static void addTweet(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException {
+    public static void addTweet(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException, InterruptedException {
         System.out.println("Please enter your tweet:");
         System.out.println("write 'exit' to exit");
         System.out.println("write 'finish' to finish the tweet:");
@@ -156,7 +164,12 @@ public class ClientUserManager {
         out.writeObject("ok");
         Tweet tweet = new Tweet(body, 0,0,0);
         out.writeObject(tweet);
-        in.readObject();
-        System.out.println(in.readObject().toString());
+        Thread.sleep(300);
+        String res = (String) in.readObject();
+        System.out.println(res);
+    }
+
+    public static void showTweet(ObjectInputStream in){
+
     }
 }
