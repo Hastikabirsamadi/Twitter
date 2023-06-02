@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class User implements Serializable {
@@ -22,6 +23,7 @@ public class User implements Serializable {
     private boolean SignedUp;
     private boolean SignedIn;
     private PersonalInfo personalInfo;
+    private ArrayList<Tweet> tweets = new ArrayList<>();
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
                 String country, String birthDate) throws ParseException {
@@ -43,11 +45,12 @@ public class User implements Serializable {
         this.username = username;
         this.password = password;
     }
-
     public void setPersonalInfo(PersonalInfo personalInfo) {
         this.personalInfo =  personalInfo;
     }
-
+    public void tweet(Tweet tweet) {
+        this.tweets.add(tweet);
+    }
     public PersonalInfo getPersonalInfo() {
         return personalInfo;
     }

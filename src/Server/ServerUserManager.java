@@ -116,10 +116,6 @@ public class ServerUserManager {
             return false;
         }
     }
-
-//    private static boolean checkIfLoggedIn() { // used for checking if user has logged in
-//
-//    }
     public static void signIn(User user) {
         for(User user1 : users.values()) {
             if(user.equals(user1)) {

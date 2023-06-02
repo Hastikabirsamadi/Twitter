@@ -1,5 +1,6 @@
 package Server;
 import Model.PersonalInfo;
+import Model.Tweet;
 import Model.User;
 
 import java.io.IOException;
@@ -105,7 +106,17 @@ public class ClientHandler implements Runnable {
                                 out.writeObject("Personal info edited successfully!");
                             }
                         }
-                        continue;
+                    }
+                    else if(userChoice.equals("4")) {
+                        System.out.println("user is adding a tweet...");
+                        String ifExit = (String) in.readObject();
+                        if(ifExit.equals("ok")) {
+                            Tweet tweet = (Tweet) in.readObject();
+                            user.tweet(tweet);
+                            System.out.println("user '" + user.getUsername() + "' added tweet successfully");
+                            out.writeObject("tweet added successfully!");
+                        }
+
                     }
                     else if(userChoice.equals("5")) {
                         break;
