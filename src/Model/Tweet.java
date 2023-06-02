@@ -2,6 +2,7 @@ package Model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Tweet implements Serializable {
     private StringBuilder body;
@@ -9,7 +10,7 @@ public class Tweet implements Serializable {
     private int retweets;
     private int comments;
     private LocalDate tweetTime;
-    private LocalDate currentTime;
+    String currentTime;
 
     public Tweet(StringBuilder body,int likes, int retweets, int comments) {
         this.body = body;
@@ -17,7 +18,6 @@ public class Tweet implements Serializable {
         this.retweets = retweets;
         this.comments = comments;
         this.tweetTime = LocalDate.now();
-        this.currentTime = LocalDate.now();
     }
 
     public int getLikes() {
@@ -42,5 +42,27 @@ public class Tweet implements Serializable {
 
     public void setComments(int comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        if(0 <= this.tweetTime.until(LocalDate.now(), ChronoUnit.SECONDS) && this.tweetTime.until(LocalDate.now(), ChronoUnit.SECONDS) < 60) {
+            this.currentTime = "Just Now";
+        }
+        else if(0 < this.tweetTime.until(LocalDate.now(), ChronoUnit.MINUTES) && this.tweetTime.until(LocalDate.now(), ChronoUnit.MINUTES) < 60) {
+            this.currentTime = String.valueOf(this.tweetTime.until(LocalDate.now(), ChronoUnit.MINUTES));
+        }
+        else if(0 < this.tweetTime.until(LocalDate.now(), ChronoUnit.HOURS) && this.tweetTime.until(LocalDate.now(), ChronoUnit.HOURS) <= 24) {
+            this.currentTime = String.valueOf(this.tweetTime.until(LocalDate.now(), ChronoUnit.HOURS));
+        }
+        else {
+            this.currentTime = String.valueOf(LocalDate.now());
+        }
+        return "*********************************" + "\n" +
+                body +
+                "\nlikes : "+likes +
+                "   retweets : " + retweets +
+                "   comments=" + comments +
+                "\n" + currentTime;
     }
 }
