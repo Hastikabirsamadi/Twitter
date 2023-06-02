@@ -51,6 +51,15 @@ public class User implements Serializable {
     public void tweet(Tweet tweet) {
         this.tweets.add(tweet);
     }
+
+    public ArrayList<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public void setTweets(ArrayList<Tweet> tweets) {
+        this.tweets = tweets;
+    }
+
     public PersonalInfo getPersonalInfo() {
         return personalInfo;
     }

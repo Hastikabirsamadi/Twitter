@@ -106,6 +106,10 @@ public class ClientHandler implements Runnable {
                                 out.writeObject("Personal info edited successfully!");
                             }
                         }
+                        else if(editAnswer.equals("2")) {
+                            System.out.println("showing user's tweets...");
+                            out.writeObject(user.getTweets());
+                        }
                     }
                     else if(userChoice.equals("4")) {
                         System.out.println("user is adding a tweet...");
