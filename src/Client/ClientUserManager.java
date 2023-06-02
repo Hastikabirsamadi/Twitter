@@ -100,13 +100,6 @@ public class ClientUserManager {
             }
             break;
         }
-//        ArrayList<Character> bioChars = new ArrayList<>();
-//         while (bioChars.size() <= 160) {
-//             if (input.next().charAt(0) == '*') {
-//                 break;
-//             }
-//             bioChars = bioChars.add();
-//             temp = new String(bioChars);
         if (bio.toString().equals("exit\n")){
             return;
         }
