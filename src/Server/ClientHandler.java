@@ -50,8 +50,8 @@ public class ClientHandler implements Runnable {
                     if (userChoice.equals("1")) {
                         System.out.println("user is signing up...");
                         User tempUser = (User) in.readObject();
-                        if (ServerUserManager.checkSignUp(user, out)) {
-                            ServerUserManager.signUp(user);
+                        if (ServerUserManager.checkSignUp(tempUser, out)) {
+                            ServerUserManager.signUp(tempUser);
                             user = tempUser;
                             System.out.println("user " + user.getUsername() + " signed up successfully :)");
                             out.writeObject("signed up successfully!");
@@ -61,8 +61,8 @@ public class ClientHandler implements Runnable {
                     else if(userChoice.equals("2")) {
                         System.out.println("user is signing in...");
                         User tempUser = (User) in.readObject();
-                        if(ServerUserManager.checkSignIn(user, out)) {
-                            ServerUserManager.signIn(user);
+                        if(ServerUserManager.checkSignIn(tempUser, out)) {
+                            ServerUserManager.signIn(tempUser);
                             user = ServerUserManager.getUsers().get(tempUser.getUsername());
                             System.out.println("user '" + user.getUsername() + "' signed in successfully :)");
                             out.writeObject("signed in successfully!");

@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class PersonalInfo implements Serializable {
     private String website;
@@ -39,17 +40,17 @@ public class PersonalInfo implements Serializable {
 
     @Override
     public String toString() {
-        if(this.website == null) {
+        if(this.website.equals("exit")) {
             this.website = "-";
         }
-        if(this.location == null) {
+        if(this.location.equals("exit")) {
             this.location = "-";
         }
-        if(this.bio == null) {
+        if(Objects.equals(this.bio, new StringBuilder("exit\n"))) {
             this.bio = new StringBuilder("-");
         }
-        return "PersonalInfo : \n\n" + "bio : \n" + bio +
-                "\n" + "location : " + location + "\n" +
+        return "PersonalInfo\n" + "-------------------------" + "bio : \n" + bio +
+                "location : " + location + "\n" +
                 "website : " + website + "\n";
     }
 }
