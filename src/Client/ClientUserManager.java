@@ -1,12 +1,17 @@
 package Client;
 
+import Model.PersonalInfo;
+
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ClientUserManager {
     private static HashMap<String,String> countries = new HashMap<>();
+    private static Scanner input = new Scanner(System.in);
     //ArrayList<User> users = new ArrayList<>();
     public static void showMenu() {
         System.out.println("""
@@ -69,5 +74,39 @@ public class ClientUserManager {
             }
         }
         return "try again";
+    }
+
+    public static void addInfo(ObjectOutputStream out) throws IOException {
+        System.out.println("please complete your personal information:");
+        System.out.println("Bio (write 'finish' to finish) :");
+        StringBuilder bio = new StringBuilder();
+        String temp = " ";
+        int counter = 0;
+        while (!temp.equals("finish")) {
+            temp = input.nextLine();
+            counter += temp.length();
+            if (temp.length() > 160) {
+                System.out.println("you can at last enter 160 characters!!!");
+                System.out.println("Try again!");
+                continue;
+            }
+            if (!temp.equals("finish")) {
+                bio.append(temp);
+                bio.append('\n');
+            }
+        }
+//        ArrayList<Character> bioChars = new ArrayList<>();
+//         while (bioChars.size() <= 160) {
+//             if (input.next().charAt(0) == '*') {
+//                 break;
+//             }
+//             bioChars = bioChars.add();
+//             temp = new String(bioChars);
+        System.out.println("Location:");
+        String location = input.nextLine();
+        System.out.println("Website:");
+        String website = input.nextLine();
+        PersonalInfo personalInfo = new PersonalInfo(website, location, bio);
+        out.writeObject(personalInfo);
     }
 }

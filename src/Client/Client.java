@@ -75,7 +75,6 @@ public class Client {
                 out.writeObject(user);
                 Thread.sleep(500);
                 String temp = (String) in.readObject();
-                //System.out.println(temp);
                 if (temp.equals("signed up successfully!")) {
                     System.out.println(temp);
                     break;
@@ -164,7 +163,12 @@ public class Client {
                 }
                 while (true){
                     ClientUserManager.showMainMenu();
-                    break outer;
+                    String choice2 = scanner.nextLine();
+                    if (choice2.equals("1")){
+                        ClientUserManager.addInfo(out);
+                        break outer;
+                    }
+                    //break outer;
                 }
             }
         }
