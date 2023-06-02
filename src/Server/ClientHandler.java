@@ -104,6 +104,9 @@ public class ClientHandler implements Runnable {
                         }
                         continue;
                     }
+                    else if(userChoice.equals("5")) {
+                        break;
+                    }
                 } catch (IOException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }

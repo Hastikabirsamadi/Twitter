@@ -17,7 +17,7 @@ public class ServerUserManager {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (FileNotFoundException | EOFException e) {
-            //   System.out.println("No notes found!");
+               System.out.println("No file found!");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
