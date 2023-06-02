@@ -207,6 +207,7 @@ public class Client {
                     ClientUserManager.showMainMenu();
                     String choice2 = scanner.nextLine();
                     if (choice2.equals("1")){
+                        out.writeObject(choice2);
                         System.out.println((in.readObject()).toString());
                         System.out.println("Do you want to edit your personal info?");
                         System.out.println("1.yes");
@@ -218,7 +219,10 @@ public class Client {
                         }
                            continue;
                     }
-                    //break outer;
+                    if (choice2.equals("5")){
+                        out.writeObject(choice2);
+                        break;
+                    }
                 }
             }
         }

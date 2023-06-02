@@ -49,8 +49,8 @@ public class PersonalInfo implements Serializable {
         if(Objects.equals(this.bio, new StringBuilder("exit\n"))) {
             this.bio = new StringBuilder("-");
         }
-        return "PersonalInfo\n" + "-------------------------" + "bio : \n" + bio +
-                "location : " + location + "\n" +
+        return "     PersonalInfo\n" + "-----------------------"+ "\n" + "bio : \n" + bio + "\n"
+                +"location : " + location + "\n" +
                 "website : " + website + "\n";
     }
 }

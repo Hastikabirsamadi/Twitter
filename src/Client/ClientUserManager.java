@@ -28,6 +28,7 @@ public class ClientUserManager {
                 2.Search
                 3.Timeline
                 4.Tweet
+                5.Exit
                 """);
     }
 
@@ -105,7 +106,7 @@ public class ClientUserManager {
 //             }
 //             bioChars = bioChars.add();
 //             temp = new String(bioChars);
-        if (bio.equals("exit")){
+        if (bio.equals("exit\nfinish")){
             return;
         }
         System.out.println("Location:");
