@@ -24,6 +24,8 @@ public class User implements Serializable {
     private boolean SignedIn;
     private PersonalInfo personalInfo;
     private ArrayList<Tweet> tweets = new ArrayList<>();
+    private ArrayList<User> followers = new ArrayList<>();
+    private ArrayList<User> followings = new ArrayList<>();
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
                 String country, String birthDate) throws ParseException {
@@ -158,4 +160,5 @@ public class User implements Serializable {
     public void setSignedIn(boolean signedIn) {
         SignedIn = signedIn;
     }
+
 }

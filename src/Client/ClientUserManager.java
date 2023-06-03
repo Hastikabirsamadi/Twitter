@@ -177,4 +177,17 @@ public class ClientUserManager {
             System.out.println(tweet.toString());
         }
     }
+
+    public static void searchUser(ObjectOutputStream out) throws IOException {
+        System.out.println("Enter an username or firstname or lastname to find it:");
+        System.out.println("write 'exit' in the field to exit");
+        String word = input.nextLine();
+        if (word.equals("exit")){
+            return;
+        }
+        out.writeObject(word);
+    }
+    public static void follow(){
+
+    }
 }
