@@ -3,6 +3,7 @@ package Server;
 import Model.*;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -122,6 +123,15 @@ public class ServerUserManager {
                 user1.setSignedIn(true);
             }
         }
+    }
+    public static ArrayList<User> searchUser(String word) {
+        ArrayList<User> foundUsers = new ArrayList<>();
+        for(User user : users.values()) {
+            if (user.getUsername().contains(word) || user.getFirstName().contains(word) || user.getLastName().contains(word)) {
+                foundUsers.add(user);
+            }
+        }
+        return foundUsers;
     }
 
     public static HashMap<String, User> getUsers() {
