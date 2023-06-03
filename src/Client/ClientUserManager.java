@@ -184,6 +184,10 @@ public class ClientUserManager {
     public static void showTweet(ObjectInputStream in) throws IOException, ClassNotFoundException {
         ArrayList<Tweet> tweets = new ArrayList<>();
         tweets = (ArrayList<Tweet>) in.readObject();
+        if (tweets.size() == 0){
+            System.out.println("No tweets!");
+            return;
+        }
         for (Tweet tweet : tweets){
             System.out.println(tweet.toString());
         }
@@ -200,7 +204,7 @@ public class ClientUserManager {
         ArrayList<User> foundUsers;
         HashMap<String, User> foundUsers2 = new HashMap<>();
         foundUsers = (ArrayList<User>) in.readObject();
-        for(int i = 1 ; i <= foundUsers.size(); i++) {
+        for(int i = 0 ; i < foundUsers.size(); i++) {
             foundUsers2.put(String.valueOf(i) , foundUsers.get(i));
         }
         if (foundUsers.size() == 0){
@@ -227,6 +231,13 @@ public class ClientUserManager {
 
     private static void showProfile(User user){
         System.out.println(user.getFirstName() + " " + user.getLastName() + "\n" +
-                user.getUsername()+ user.getPersonalInfo().toString());
+                user.getUsername()+ "\n" + user.getPersonalInfo().toString());
+        if (user.getTweets().size() == 0){
+            System.out.println("No tweets!");
+            return;
+        }
+        for(Tweet tweet : user.getTweets()) {
+            System.out.println(tweet.toString());
+        }
     }
 }

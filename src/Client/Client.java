@@ -221,7 +221,6 @@ public class Client {
                     }
                     else if (choice2.equals("2")){
                         ClientUserManager.searchUser(out, in);
-                        while (true) {
                             ClientUserManager.showSearchMenu();
                             String ans = scanner.nextLine();
                             out.writeObject(ans);
@@ -229,7 +228,6 @@ public class Client {
 
                             }
                         }
-                    }
                     else if (choice2.equals("4")){
                         ClientUserManager.addTweet(out,in);
                     }
