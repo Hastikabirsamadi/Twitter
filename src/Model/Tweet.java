@@ -53,24 +53,23 @@ public class Tweet implements Serializable {
     @Override
     public String toString() {
         long diff = convertDate(tweetTime, LocalDateTime.now());
-        System.out.println("diff is : " + diff);
         if(0 < diff && diff < 60) {
             this.currentTime = "Just Now";
         }
-        if(0 < (diff/60) && (diff/60) < 60) {
+        else if(0 < (diff/60) && (diff/60) < 60) {
             this.currentTime = (diff/60) + "m";
         }
         else if(0 < diff/3600 && diff/3600 <= 24) {
             this.currentTime = (diff/3600) + "h";
         }
         else {
-            this.currentTime = (LocalDate.now().getDayOfYear()) + " " + (LocalDate.now().getMonth());
+            this.currentTime = (LocalDate.now().getDayOfMonth()) + " " + (LocalDate.now().getMonth());
         }
         return "*********************************" + "\n" +
                 body +
                 "\nlikes : "+likes +
                 "   retweets : " + retweets +
-                "   comments=" + comments +
+                "   comments : " + comments +
                 "\n" + currentTime;
     }
 
