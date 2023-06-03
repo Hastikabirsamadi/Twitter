@@ -120,7 +120,6 @@ public class ClientHandler implements Runnable {
                             System.out.println("user '" + user.getUsername() + "' added tweet successfully");
                             out.writeObject("tweet added successfully!");
                         }
-
                     }
                     else if(userChoice.equals("5")) {
                         break;
