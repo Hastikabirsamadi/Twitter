@@ -3,15 +3,19 @@ package Model;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.time.ZoneId;
 
 public class Tweet implements Serializable {
     private StringBuilder body;
     private int likes;
     private int retweets;
     private int comments;
-    private LocalDate tweetTime;
+    private LocalDateTime tweetTime;
     String currentTime;
 
     public Tweet(StringBuilder body,int likes, int retweets, int comments) {
@@ -19,7 +23,7 @@ public class Tweet implements Serializable {
         this.likes = likes;
         this.retweets = retweets;
         this.comments = comments;
-        this.tweetTime = LocalDate.now();
+        this.tweetTime = LocalDateTime.now();
     }
 
     public int getLikes() {
@@ -48,18 +52,19 @@ public class Tweet implements Serializable {
 
     @Override
     public String toString() {
-        long diff = convertDate(tweetTime, LocalDate.now());
-        if(0 <= diff && diff < 60) {
+        long diff = convertDate(tweetTime, LocalDateTime.now());
+        System.out.println("diff is : " + diff);
+        if(0 < diff && diff < 60) {
             this.currentTime = "Just Now";
         }
-        else if(0 < diff/60 && diff/60 < 60) {
+        if(0 < (diff/60) && (diff/60) < 60) {
             this.currentTime = (diff/60) + "m";
         }
         else if(0 < diff/3600 && diff/3600 <= 24) {
             this.currentTime = (diff/3600) + "h";
         }
         else {
-            this.currentTime = String.valueOf(LocalDate.now().getDayOfYear()) + (LocalDate.now().getMonth());
+            this.currentTime = (LocalDate.now().getDayOfYear()) + " " + (LocalDate.now().getMonth());
         }
         return "*********************************" + "\n" +
                 body +
@@ -69,9 +74,10 @@ public class Tweet implements Serializable {
                 "\n" + currentTime;
     }
 
-    public static long convertDate(LocalDate startTime, LocalDate finishTime){
-        Date start = java.sql.Date.valueOf(startTime);
-        Date finish = java.sql.Date.valueOf(finishTime);
+    public static long convertDate(LocalDateTime startTime, LocalDateTime finishTime){
+        ZoneId zoneId = ZoneId.systemDefault();
+        Date start = Date.from(startTime.atZone(zoneId).toInstant());
+        Date finish = Date.from(finishTime.atZone(zoneId).toInstant());
         return (finish.getTime() - start.getTime())/1000;
     }
 }
