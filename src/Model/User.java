@@ -54,6 +54,19 @@ public class User implements Serializable {
         this.tweets.add(tweet);
     }
 
+    public void follow(User user) {
+        this.followings.add(user);
+        user.followers.add(this);
+    }
+
+    public ArrayList<User> getFollowers() {
+        return followers;
+    }
+
+    public ArrayList<User> getFollowings() {
+        return followings;
+    }
+
     public ArrayList<Tweet> getTweets() {
         return tweets;
     }

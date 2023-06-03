@@ -95,6 +95,8 @@ public class ClientHandler implements Runnable {
                     if(userChoice.equals("1")) {
                         System.out.println("user is editing personal info...");
                         out.writeObject(user.getPersonalInfo());
+                        out.writeObject(user.getFollowers().size());
+                        out.writeObject(user.getFollowings().size());
                         System.out.println("user's personal info is sent :)");
                         String answer = (String) in.readObject();
                         if(answer.equals("1")) {
@@ -117,6 +119,12 @@ public class ClientHandler implements Runnable {
                         if(!word.equals("exit")) {
                             out.writeObject(ServerUserManager.searchUser(word));
                             String searchChoice = (String) in.readObject();
+                            if(searchChoice.equals("1")) {
+                                User temp = (User) in.readObject();
+                                user.follow(temp);
+                                out.writeObject("followed successfully");
+                                System.out.println(temp.getUsername() + "is followed successfully :)");
+                            }
                         }
                     }
                     else if(userChoice.equals("4")) {
