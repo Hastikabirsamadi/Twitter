@@ -47,10 +47,11 @@ public class Tweet implements Serializable {
 
     @Override
     public String toString() {
-        if(0 <= this.tweetTime.until(LocalDate.now(), ChronoUnit.SECONDS) && this.tweetTime.until(LocalDate.now(), ChronoUnit.SECONDS) < 60) {
+        long diff = ChronoUnit.SECONDS.between(this.tweetTime, LocalDate.now());
+        if(0 <= diff && diff < 60) {
             this.currentTime = "Just Now";
         }
-        if(0 < Duration.between(tweetTime , LocalDate.now()).toMinutes() &&  Duration.between(tweetTime , LocalDate.now()).toMinutes() < 60) {
+        if(0 < diff &&  Duration.between(tweetTime , LocalDate.now()).toMinutes() < 60) {
             this.currentTime = String.valueOf(this.tweetTime.until(LocalDate.now(), ChronoUnit.MINUTES));
         }
         else if(0 < this.tweetTime.until(LocalDate.now(), ChronoUnit.HOURS) && this.tweetTime.until(LocalDate.now(), ChronoUnit.HOURS) <= 24) {
