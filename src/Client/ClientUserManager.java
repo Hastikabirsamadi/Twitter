@@ -35,6 +35,16 @@ public class ClientUserManager {
                 """);
     }
 
+    public static void showSearchMenu(){
+        System.out.println("""
+                Please choose an option :\s
+                1.Follow
+                2.Unfollow
+                3.Block
+                4.Unblock
+                """);
+    }
+
     public static void showProfileMenu(){
         System.out.println("""
                 Please choose an option :\s
@@ -181,21 +191,42 @@ public class ClientUserManager {
 
     public static void searchUser(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException {
         System.out.println("Enter an username or firstname or lastname to find it:");
-        System.out.println("write 'exit' in the field to exit");
+        System.out.println("write 'exit' in the field to exit:");
         String word = input.nextLine();
+        out.writeObject(word);
         if (word.equals("exit")){
             return;
         }
-        out.writeObject(word);
         ArrayList<User> foundUsers;
+        HashMap<String, User> foundUsers2 = new HashMap<>();
         foundUsers = (ArrayList<User>) in.readObject();
-        int counter = 0;
+        for(int i = 1 ; i <= foundUsers.size(); i++) {
+            foundUsers2.put(String.valueOf(i) , foundUsers.get(i));
+        }
+        if (foundUsers.size() == 0){
+            System.out.println("Not Found!");
+            return;
+        }
+        int counter = 1;
         for (User user : foundUsers){
-            System.out.println(counter + user.showSearchUser());
+            System.out.println(counter +"- "+ user.showSearchUser());
             counter++;
         }
+        System.out.println("Please choose a user:");
+        System.out.println("write 'exit' in the field to exit:");
+        String choice = input.nextLine();
+//        out.writeObject(choice);
+        if (choice.equals("exit")){
+            return;
+        }
+        showProfile(foundUsers2.get(choice));
     }
     public static void follow(){
 
+    }
+
+    private static void showProfile(User user){
+        System.out.println(user.getFirstName() + " " + user.getLastName() + "\n" +
+                user.getUsername()+ user.getPersonalInfo().toString());
     }
 }

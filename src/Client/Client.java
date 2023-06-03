@@ -206,8 +206,8 @@ public class Client {
                 while (true){
                     ClientUserManager.showMainMenu();
                     String choice2 = scanner.nextLine();
+                    out.writeObject(choice2);
                     if (choice2.equals("1")){
-                        out.writeObject(choice2);
                         System.out.println((in.readObject()).toString());
                         ClientUserManager.showProfileMenu();
                         String ans = scanner.nextLine();
@@ -219,12 +219,21 @@ public class Client {
                             ClientUserManager.showTweet(in);
                         }
                     }
+                    else if (choice2.equals("2")){
+                        ClientUserManager.searchUser(out, in);
+                        while (true) {
+                            ClientUserManager.showSearchMenu();
+                            String ans = scanner.nextLine();
+                            out.writeObject(ans);
+                            if (ans.equals("1")){
+
+                            }
+                        }
+                    }
                     else if (choice2.equals("4")){
-                        out.writeObject(choice2);
                         ClientUserManager.addTweet(out,in);
                     }
                     else if (choice2.equals("5")){
-                        out.writeObject(choice2);
                         break;
                     }
                 }
