@@ -42,6 +42,7 @@ public class ClientUserManager {
                 2.Unfollow
                 3.Block
                 4.Unblock
+                5.Exit
                 """);
     }
 
@@ -193,7 +194,7 @@ public class ClientUserManager {
         }
     }
 
-    public static void searchUser(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException {
+    public static void searchUser(ObjectOutputStream out, ObjectInputStream in, User temp) throws IOException, ClassNotFoundException {
         System.out.println("Enter an username or firstname or lastname to find it:");
         System.out.println("write 'exit' in the field to exit:");
         String word = input.nextLine();
@@ -219,14 +220,21 @@ public class ClientUserManager {
         System.out.println("Please choose a user:");
         System.out.println("write 'exit' in the field to exit:");
         String choice = input.nextLine();
-//        out.writeObject(choice);
+        temp = foundUsers2.get(choice);
         if (choice.equals("exit")){
             return;
         }
         showProfile(foundUsers2.get(choice));
     }
-    public static void follow(){
-
+    public static void follow(User user, ObjectOutputStream out, ObjectInputStream in){
+        try {
+            out.writeObject(user);
+            System.out.println(in.readObject());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void showProfile(User user){

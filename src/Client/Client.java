@@ -209,6 +209,9 @@ public class Client {
                     out.writeObject(choice2);
                     if (choice2.equals("1")){
                         System.out.println((in.readObject()).toString());
+                        String followersSize = (String)in.readObject();
+                        String followingsSize = (String)in.readObject();
+                        System.out.println("followers : " + followersSize + "  " + "followings : " + followingsSize);
                         ClientUserManager.showProfileMenu();
                         String ans = scanner.nextLine();
                         out.writeObject(ans);
@@ -220,12 +223,13 @@ public class Client {
                         }
                     }
                     else if (choice2.equals("2")){
-                        ClientUserManager.searchUser(out, in);
+                        User temp = new User(null, null);
+                        ClientUserManager.searchUser(out, in, temp);
                             ClientUserManager.showSearchMenu();
                             String ans = scanner.nextLine();
                             out.writeObject(ans);
                             if (ans.equals("1")){
-
+                                ClientUserManager.follow(temp, out, in);
                             }
                         }
                     else if (choice2.equals("4")){
