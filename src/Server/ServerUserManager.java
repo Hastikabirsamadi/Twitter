@@ -13,7 +13,7 @@ public class ServerUserManager {
     Scanner scanner = new Scanner(System.in);
 
     public static void readFile() {
-        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("users3.bin"))) {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("users.bin"))) {
             users = (HashMap<String, User>) objectInputStream.readObject();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -24,7 +24,7 @@ public class ServerUserManager {
         }
     }
     public static void writeFile(HashMap<String, User> users) {
-       try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("users3.bin"))) {
+       try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("users.bin"))) {
            objectOutputStream.writeObject(users);
        }
        catch(FileNotFoundException e ) {

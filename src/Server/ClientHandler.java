@@ -93,11 +93,11 @@ public class ClientHandler implements Runnable {
                     System.out.println("getting user's choice after sign in and sign up :)");
                     userChoice = (String) in.readObject();
                     if(userChoice.equals("1")) {
-                        System.out.println("user is adding bio...");
+                        System.out.println("user is editing personal info...");
                         out.writeObject(user.getPersonalInfo());
                         System.out.println("user's personal info is sent :)");
-                        String editAnswer = (String) in.readObject();
-                        if(editAnswer.equals("1")) {
+                        String answer = (String) in.readObject();
+                        if(answer.equals("1")) {
                             String ifExit = (String) in.readObject();
                             if(ifExit.equals("ok")) {
                                 PersonalInfo info = (PersonalInfo) in.readObject();
@@ -106,9 +106,17 @@ public class ClientHandler implements Runnable {
                                 out.writeObject("Personal info edited successfully!");
                             }
                         }
-                        else if(editAnswer.equals("2")) {
+                        else if(answer.equals("2")) {
                             System.out.println("showing user's tweets...");
                             out.writeObject(user.getTweets());
+                        }
+                    }
+                    else if(userChoice.equals("2")) {
+                        System.out.println("user is searching...");
+                        String word = (String) in.readObject();
+                        if(!word.equals("exit")) {
+                            out.writeObject(ServerUserManager.searchUser(word));
+                            String searchChoice = (String) in.readObject();
                         }
                     }
                     else if(userChoice.equals("4")) {
