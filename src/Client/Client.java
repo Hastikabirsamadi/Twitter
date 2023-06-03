@@ -216,7 +216,7 @@ public class Client {
                             ClientUserManager.addInfo(out, in);
                         }
                         else if (ans.equals("2")){
-
+                            ClientUserManager.showTweet(in);
                         }
                     }
                     else if (choice2.equals("4")){

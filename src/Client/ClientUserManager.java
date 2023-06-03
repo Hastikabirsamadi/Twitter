@@ -4,6 +4,7 @@ import Model.PersonalInfo;
 import Model.Tweet;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -169,7 +170,11 @@ public class ClientUserManager {
         System.out.println(res);
     }
 
-    public static void showTweet(ObjectInputStream in){
-
+    public static void showTweet(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        ArrayList<Tweet> tweets = new ArrayList<>();
+        tweets = (ArrayList<Tweet>) in.readObject();
+        for (Tweet tweet : tweets){
+            System.out.println(tweet.toString());
+        }
     }
 }

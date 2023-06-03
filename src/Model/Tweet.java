@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -49,7 +50,7 @@ public class Tweet implements Serializable {
         if(0 <= this.tweetTime.until(LocalDate.now(), ChronoUnit.SECONDS) && this.tweetTime.until(LocalDate.now(), ChronoUnit.SECONDS) < 60) {
             this.currentTime = "Just Now";
         }
-        else if(0 < this.tweetTime.until(LocalDate.now(), ChronoUnit.MINUTES) && this.tweetTime.until(LocalDate.now(), ChronoUnit.MINUTES) < 60) {
+        if(0 < Duration.between(tweetTime , LocalDate.now()).toMinutes() &&  Duration.between(tweetTime , LocalDate.now()).toMinutes() < 60) {
             this.currentTime = String.valueOf(this.tweetTime.until(LocalDate.now(), ChronoUnit.MINUTES));
         }
         else if(0 < this.tweetTime.until(LocalDate.now(), ChronoUnit.HOURS) && this.tweetTime.until(LocalDate.now(), ChronoUnit.HOURS) <= 24) {
