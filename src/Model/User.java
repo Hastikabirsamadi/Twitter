@@ -161,4 +161,16 @@ public class User implements Serializable {
         SignedIn = signedIn;
     }
 
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "username='" + username + '\'' +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                '}';
+//    }
+
+    public String showSearchUser(){
+        return this.firstName+" "+this.lastName+"\n"+this.username;
+    }
 }

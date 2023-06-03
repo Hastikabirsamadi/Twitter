@@ -2,6 +2,7 @@ package Client;
 
 import Model.PersonalInfo;
 import Model.Tweet;
+import Model.User;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -178,7 +179,7 @@ public class ClientUserManager {
         }
     }
 
-    public static void searchUser(ObjectOutputStream out) throws IOException {
+    public static void searchUser(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException {
         System.out.println("Enter an username or firstname or lastname to find it:");
         System.out.println("write 'exit' in the field to exit");
         String word = input.nextLine();
@@ -186,6 +187,13 @@ public class ClientUserManager {
             return;
         }
         out.writeObject(word);
+        ArrayList<User> foundUsers;
+        foundUsers = (ArrayList<User>) in.readObject();
+        int counter = 0;
+        for (User user : foundUsers){
+            System.out.println(counter + user.showSearchUser());
+            counter++;
+        }
     }
     public static void follow(){
 
