@@ -119,9 +119,11 @@ public class ClientHandler implements Runnable {
                             String searchChoice = (String) in.readObject();
                             if(searchChoice.equals("1")) {
                                 User temp = (User) in.readObject();
-                                user.follow(temp);
-                                out.writeObject("followed successfully");
-                                System.out.println(temp.getUsername() + "is followed successfully :)");
+                                if(user.checkFollow(temp, out)) {
+                                    user.follow(temp);
+                                    out.writeObject(temp.getUsername() + "is followed successfully");
+                                    System.out.println(temp.getUsername() + "is followed successfully :)");
+                                }
                             }
                         }
                     }

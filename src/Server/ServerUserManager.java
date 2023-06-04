@@ -88,6 +88,7 @@ public class ServerUserManager {
     }
     public static void signUp(User user) throws IOException {
         users.put(user.getUsername(), user);
+        writeFile(users);
     }
 
     public static  boolean checkPassword(String username, String password) {

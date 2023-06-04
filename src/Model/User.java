@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,7 +57,29 @@ public class User implements Serializable {
         this.tweets.add(tweet);
     }
 
+    public boolean checkFollow(User user, ObjectOutputStream out) {
+            for (User followedUser : followings) {
+                if (followedUser.equals(user)) {
+                    try {
+                        out.writeObject("You have already followed this user!");
+                        return false;
+                    }
+                    catch (IOException e) {
+                        System.out.println("IO Exception in check follow method");
+                        return false;
+                    }
+                }
+            }
+         try {
+             out.writeObject("success");
+         } catch (IOException e) {
+             System.out.println("IO Exception in check follow method");
+             return false;
+         }
+        return true;
+    }
     public void follow(User user) {
+        //this follows user
         this.followings.add(user);
         user.followers.add(this);
     }
