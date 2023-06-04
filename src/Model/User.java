@@ -79,12 +79,16 @@ public class User implements Serializable {
          }
         return true;
     }
-    public void follow(User temp) {
+    public void follow(String tempUserUsername) {
         //this follows temp
-        this.followings.add(temp);
+        this.followings.add(ServerManager.getUsers().get(tempUserUsername));
         for(User user : ServerManager.getUsers().values()) {
-            if(temp.equals(user)) {
+            System.out.println("usernames are : ");
+            System.out.println(tempUserUsername);
+            System.out.println(user.getUsername());
+            if(tempUserUsername.equals(user.getUsername())) {
                 user.followers.add(this);
+                return;
             }
         }
     }

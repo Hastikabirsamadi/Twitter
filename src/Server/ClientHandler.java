@@ -119,10 +119,12 @@ public class ClientHandler implements Runnable {
                         if(!word.equals("exit")) {
                             out.writeObject(ServerManager.searchUser(word)); //sending an arraylist of found users for client
                             String searchChoice = (String) in.readObject();
-                            if(searchChoice.equals("1")) {
+                            if(searchChoice.equals("1")) { //follow
                                 User temp = (User) in.readObject();
+                                System.out.println("chosen person is : " + temp.getUsername());
                                 if(user.checkFollow(temp, out)) {
-                                    user.follow(temp);
+                                    user.follow(temp.getUsername());
+                                    System.out.println(temp.getUsername());
                                     out.writeObject(temp.getUsername() + " is followed successfully");
                                     System.out.println(temp.getUsername() + " is followed successfully :)");
                                 }

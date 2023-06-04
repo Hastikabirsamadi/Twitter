@@ -240,7 +240,9 @@ public class Client {
                             //user chose to follow one of the users in the list of the given users from the server
                             if (ans.equals("1")){
                                 //temp is the user who is followed
-                                ClientManager.follow(temp, out, in);
+                                if(temp != null) {
+                                    ClientManager.follow(temp, out, in);
+                                }
                             }
                         }
                     //user chose to add tweet
