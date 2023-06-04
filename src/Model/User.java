@@ -83,16 +83,43 @@ public class User implements Serializable {
         //this follows temp
         this.followings.add(ServerManager.getUsers().get(tempUserUsername));
         for(User user : ServerManager.getUsers().values()) {
-            System.out.println("usernames are : ");
-            System.out.println(tempUserUsername);
-            System.out.println(user.getUsername());
             if(tempUserUsername.equals(user.getUsername())) {
                 user.followers.add(this);
                 return;
             }
         }
     }
-
+    public boolean checkUnfollow(User user, ObjectOutputStream out) {
+        for (User followedUser : followings) {
+            if (!followedUser.equals(user)) {
+                try {
+                    out.writeObject("You haven't followed this user yet!");
+                    return false;
+                }
+                catch (IOException e) {
+                    System.out.println("IO Exception in check follow method");
+                    return false;
+                }
+            }
+        }
+        try {
+            out.writeObject("success");
+        } catch (IOException e) {
+            System.out.println("IO Exception in check follow method");
+            return false;
+        }
+        return true;
+    }
+    public void unfollow(String tempUserUsername) {
+        //this unfollows temp
+        this.followings.remove(ServerManager.getUsers().get(tempUserUsername));
+        for(User user : ServerManager.getUsers().values()) {
+            if(tempUserUsername.equals(user.getUsername())) {
+                user.followers.remove(this);
+                return;
+            }
+        }
+    }
     public ArrayList<User> getFollowers() {
         return followers;
     }
