@@ -213,6 +213,9 @@ public class Client {
                     //user chose to show the profile
                     if (choice2.equals("1")){
                         System.out.println((in.readObject()).toString());
+                        int followerSize = (int)in.readObject();
+                        int followingSize = (int) in.readObject();
+                        System.out.println("Followers : " + followerSize + "   " + "Followings : " + followingSize);
                         ClientManager.showProfileMenu();
                         String ans = scanner.nextLine();
                         out.writeObject(ans);

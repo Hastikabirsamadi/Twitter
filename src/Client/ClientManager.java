@@ -247,7 +247,8 @@ public class ClientManager {
     //For showing User's profile when you search and choose them
     private static void showProfile(User user){
         System.out.println(user.getFirstName() + " " + user.getLastName() + "\n" +
-                user.getUsername()+ "\n" + user.getPersonalInfo().toString() + "\n");
+                user.getUsername()+ "\n" + user.getPersonalInfo().toString() + "\n" +
+                "Followers : "+ user.getFollowers().size() + "   " + "Following : " + user.getFollowings().size());
         if (user.getTweets().size() == 0){
             System.out.println("No tweets!");
             return;

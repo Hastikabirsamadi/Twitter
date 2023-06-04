@@ -49,21 +49,6 @@ public class PersonalInfo implements Serializable {
         this.bio = bio;
     }
 
-//    public int getFollowerSize() {
-//        return followerSize;
-//    }
-//
-//    public void setFollowerSize(int followerSize) {
-//        this.followerSize = followerSize;
-//    }
-//
-//    public int getFollowingSize() {
-//        return followingSize;
-//    }
-//
-//    public void setFollowingSize(int followingSize) {
-//        this.followingSize = followingSize;
-//    }
 
     @Override
     public String toString() {
