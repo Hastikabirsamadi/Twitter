@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ClientUserManager {
+public class ClientManager {
     private static HashMap<String,String> countries = new HashMap<>();
     private static Scanner input = new Scanner(System.in);
     private static boolean flag = false;

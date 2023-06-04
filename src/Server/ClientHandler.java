@@ -44,15 +44,15 @@ public class ClientHandler implements Runnable {
                     System.out.println("getting user's choice");
                     userChoice = (String) in.readObject();
                     if (userChoice.equals("3")) {
-                        ServerUserManager.writeFile(ServerUserManager.getUsers());
+                        ServerManager.writeFile(ServerManager.getUsers());
                         exit();
                         break outer;
                     }
                     if (userChoice.equals("1")) {
                         System.out.println("user is signing up...");
                         User tempUser = (User) in.readObject();
-                        if (ServerUserManager.checkSignUp(tempUser, out)) {
-                            ServerUserManager.signUp(tempUser);
+                        if (ServerManager.checkSignUp(tempUser, out)) {
+                            ServerManager.signUp(tempUser);
                             user = tempUser;
                             System.out.println("user " + user.getUsername() + " signed up successfully :)");
                             out.writeObject("signed up successfully!");
@@ -62,9 +62,9 @@ public class ClientHandler implements Runnable {
                     else if(userChoice.equals("2")) {
                         System.out.println("user is signing in...");
                         User tempUser = (User) in.readObject();
-                        if(ServerUserManager.checkSignIn(tempUser, out)) {
-                            ServerUserManager.signIn(tempUser);
-                            user = ServerUserManager.getUsers().get(tempUser.getUsername());
+                        if(ServerManager.checkSignIn(tempUser, out)) {
+                            ServerManager.signIn(tempUser);
+                            user = ServerManager.getUsers().get(tempUser.getUsername());
                             System.out.println("user '" + user.getUsername() + "' signed in successfully :)");
                             out.writeObject("signed in successfully!");
                             break;
@@ -115,7 +115,7 @@ public class ClientHandler implements Runnable {
                         System.out.println("user is searching...");
                         String word = (String) in.readObject(); // receiving word to search
                         if(!word.equals("exit")) {
-                            out.writeObject(ServerUserManager.searchUser(word)); //sending an arraylist of found users for client
+                            out.writeObject(ServerManager.searchUser(word)); //sending an arraylist of found users for client
                             String searchChoice = (String) in.readObject();
                             if(searchChoice.equals("1")) {
                                 User temp = (User) in.readObject();

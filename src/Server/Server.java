@@ -7,7 +7,7 @@ public class Server extends Thread{
     static boolean running = true;
     private static ArrayList<ClientHandler> clients = new ArrayList<>();
     public static void main(String[] args){
-        ServerUserManager.readFile();
+        ServerManager.readFile();
         ServerThread serverThread = new ServerThread();
         serverThread.start();
     }

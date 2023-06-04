@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class ServerUserManager {
+public class ServerManager {
 
     private static HashMap<String, User> users = new HashMap<>();
     Scanner scanner = new Scanner(System.in);
@@ -140,6 +140,6 @@ public class ServerUserManager {
     }
 
     public static void setUsers(HashMap<String, User> users) {
-        ServerUserManager.users = users;
+        ServerManager.users = users;
     }
 }
