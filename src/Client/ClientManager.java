@@ -206,7 +206,7 @@ public class ClientManager {
         HashMap<String, User> foundUsers2 = new HashMap<>();
         foundUsers = (ArrayList<User>) in.readObject();
         for(int i = 0 ; i < foundUsers.size(); i++) {
-            foundUsers2.put(String.valueOf(i) , foundUsers.get(i));
+            foundUsers2.put(String.valueOf(i+1) , foundUsers.get(i));
         }
         if (foundUsers.size() == 0){
             System.out.println("Not Found!");
@@ -237,9 +237,10 @@ public class ClientManager {
         }
     }
 
+    //For showing User's profile when you search and choose them
     private static void showProfile(User user){
         System.out.println(user.getFirstName() + " " + user.getLastName() + "\n" +
-                user.getUsername()+ "\n" + user.getPersonalInfo().toString());
+                user.getUsername()+ "\n" + user.getPersonalInfo().toString() + "\n");
         if (user.getTweets().size() == 0){
             System.out.println("No tweets!");
             return;

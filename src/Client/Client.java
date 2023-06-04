@@ -57,14 +57,14 @@ public class Client {
                 if (passRepetition.equals("exit")){
                     return;
                 }
-                ClientManager.showCountries();
+                ClientUserManager.showCountries();
                 System.out.println();
                 System.out.print("please enter the number of your country: ");
                 String num = scanner.nextLine();
                 if (num.equals("exit")){
                     return;
                 }
-                String country = ClientManager.getCountry(num);
+                String country = ClientUserManager.getCountry(num);
                 System.out.print("Birth day: ");
                 String day = scanner.nextLine();
                 if (day.equals("exit")){
@@ -81,10 +81,10 @@ public class Client {
                     return;
                 }
                 String birthDate = year + "-" + month + "-" + day;
-                if (ClientManager.checkEmailFormat(emailOrNumber)) {
+                if (ClientUserManager.checkEmailFormat(emailOrNumber)) {
                     email = emailOrNumber;
-                } else if (ClientManager.checkPhoneNumberFormat(emailOrNumber)) {
-                    if (ClientManager.checkPhoneNumberLength(emailOrNumber))
+                } else if (ClientUserManager.checkPhoneNumberFormat(emailOrNumber)) {
+                    if (ClientUserManager.checkPhoneNumberLength(emailOrNumber))
                         phone = emailOrNumber;
                     else {
                         throw new IllegalArgumentException("invalid format for phone number!");
@@ -92,10 +92,10 @@ public class Client {
                 } else {
                     throw new IllegalArgumentException("invalid format for phone number or email!");
                 }
-                if (!ClientManager.checkPasswordLength(pass)) {
+                if (!ClientUserManager.checkPasswordLength(pass)) {
                     throw new IllegalArgumentException("password must be at least 8 characters!");
                 }
-                if (!ClientManager.checkPasswordFormat(pass)) {
+                if (!ClientUserManager.checkPasswordFormat(pass)) {
                     throw new IllegalArgumentException("The format of the password is wrong!");
                 }
                 if (!pass.equals(passRepetition)) {
@@ -182,20 +182,23 @@ public class Client {
                 clientReceiverThread = new Thread(clientMessageReceiver);
                 clientReceiverThread.start();
                 while (true) {
-                    ClientManager.showMenu();
+                    ClientUserManager.showMenu();
                     String choice = scanner.nextLine();
+                    //User chose to sign up
                     if (choice.equals("1")) {
                         signUp();
                         if (isSignUP) {
                             break;
                         }
                     }
+                    //User chose to sign in
                     else if (choice.equals("2")){
                         signIn();
                         if (isSignIn){
                             break;
                         }
                     }
+                    //user chose to exit from the primary menu
                     else if (choice.equals("3")){
                         out.writeObject(choice);
                         System.out.println((String) in.readObject());
@@ -204,37 +207,45 @@ public class Client {
                     }
                 }
                 while (true){
-                    ClientManager.showMainMenu();
+                    ClientUserManager.showMainMenu();
                     String choice2 = scanner.nextLine();
                     out.writeObject(choice2);
+                    //user chose to show the profile
                     if (choice2.equals("1")){
                         System.out.println((in.readObject()).toString());
-                        String followersSize = (String)in.readObject();
-                        String followingsSize = (String)in.readObject();
-                        System.out.println("followers : " + followersSize + "  " + "followings : " + followingsSize);
-                        ClientManager.showProfileMenu();
+                        ClientUserManager.showProfileMenu();
                         String ans = scanner.nextLine();
                         out.writeObject(ans);
+                        //user chose to edit personal info
                         if (ans.equals("1")) {
-                            ClientManager.addInfo(out, in);
+                            ClientUserManager.addInfo(out, in);
                         }
+                        //user chose to see his/hers tweets
                         else if (ans.equals("2")){
-                            ClientManager.showTweet(in);
+                            ClientUserManager.showTweet(in);
                         }
                     }
+                    //user chose to search for another user
                     else if (choice2.equals("2")){
                         User temp = new User(null, null);
-                        ClientManager.searchUser(out, in, temp);
-                            ClientManager.showSearchMenu();
+                        ClientUserManager.searchUser(out, in, temp);
+                        //Show the options after you search for users
+                           ClientUserManager.showSearchMenu();
+                           //get the option from the search menu
                             String ans = scanner.nextLine();
+                            //give that option to the server
                             out.writeObject(ans);
+                            //user chose to follow one of the users in the list of the given users from the server
                             if (ans.equals("1")){
-                                ClientManager.follow(temp, out, in);
+                                //temp is the user who is followed
+                                ClientUserManager.follow(temp, out, in);
                             }
                         }
+                    //user chose to add tweet
                     else if (choice2.equals("4")){
-                        ClientManager.addTweet(out,in);
+                        ClientUserManager.addTweet(out,in);
                     }
+                    //user chose to exit from the main menu
                     else if (choice2.equals("5")){
                         break;
                     }
