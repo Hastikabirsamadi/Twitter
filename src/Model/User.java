@@ -90,25 +90,19 @@ public class User implements Serializable {
         }
     }
     public boolean checkUnfollow(User user, ObjectOutputStream out) {
-        for (User followedUser : followings) {
-            if (!followedUser.equals(user)) {
-                try {
-                    out.writeObject("You haven't followed this user yet!");
-                    return false;
-                }
-                catch (IOException e) {
-                    System.out.println("IO Exception in check follow method");
-                    return false;
+        try {
+            for (User followedUser : followings) {
+                if (followedUser.equals(user)) {
+                    out.writeObject("success");
+                    return true;
                 }
             }
-        }
-        try {
-            out.writeObject("success");
+            out.writeObject("You haven't followed this user yet!");
+            return false;
         } catch (IOException e) {
             System.out.println("IO Exception in check follow method");
             return false;
         }
-        return true;
     }
     public void unfollow(String tempUserUsername) {
         //this unfollows temp
