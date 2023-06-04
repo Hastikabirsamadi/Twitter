@@ -95,6 +95,8 @@ public class ClientHandler implements Runnable {
                     if(userChoice.equals("1")) {
                         System.out.println("user is editing personal info...");
                         out.writeObject(user.getPersonalInfo());
+                        out.writeObject(user.getFollowers().size());
+                        out.writeObject(user.getFollowings().size());
                         System.out.println("user's personal info is sent :)");
                         String answer = (String) in.readObject();
                         if(answer.equals("1")) {
