@@ -57,14 +57,14 @@ public class Client {
                 if (passRepetition.equals("exit")){
                     return;
                 }
-                ClientUserManager.showCountries();
+                ClientManager.showCountries();
                 System.out.println();
                 System.out.print("please enter the number of your country: ");
                 String num = scanner.nextLine();
                 if (num.equals("exit")){
                     return;
                 }
-                String country = ClientUserManager.getCountry(num);
+                String country = ClientManager.getCountry(num);
                 System.out.print("Birth day: ");
                 String day = scanner.nextLine();
                 if (day.equals("exit")){
@@ -81,10 +81,10 @@ public class Client {
                     return;
                 }
                 String birthDate = year + "-" + month + "-" + day;
-                if (ClientUserManager.checkEmailFormat(emailOrNumber)) {
+                if (ClientManager.checkEmailFormat(emailOrNumber)) {
                     email = emailOrNumber;
-                } else if (ClientUserManager.checkPhoneNumberFormat(emailOrNumber)) {
-                    if (ClientUserManager.checkPhoneNumberLength(emailOrNumber))
+                } else if (ClientManager.checkPhoneNumberFormat(emailOrNumber)) {
+                    if (ClientManager.checkPhoneNumberLength(emailOrNumber))
                         phone = emailOrNumber;
                     else {
                         throw new IllegalArgumentException("invalid format for phone number!");
@@ -92,10 +92,10 @@ public class Client {
                 } else {
                     throw new IllegalArgumentException("invalid format for phone number or email!");
                 }
-                if (!ClientUserManager.checkPasswordLength(pass)) {
+                if (!ClientManager.checkPasswordLength(pass)) {
                     throw new IllegalArgumentException("password must be at least 8 characters!");
                 }
-                if (!ClientUserManager.checkPasswordFormat(pass)) {
+                if (!ClientManager.checkPasswordFormat(pass)) {
                     throw new IllegalArgumentException("The format of the password is wrong!");
                 }
                 if (!pass.equals(passRepetition)) {
@@ -182,7 +182,7 @@ public class Client {
                 clientReceiverThread = new Thread(clientMessageReceiver);
                 clientReceiverThread.start();
                 while (true) {
-                    ClientUserManager.showMenu();
+                    ClientManager.showMenu();
                     String choice = scanner.nextLine();
                     //User chose to sign up
                     if (choice.equals("1")) {
@@ -207,30 +207,30 @@ public class Client {
                     }
                 }
                 while (true){
-                    ClientUserManager.showMainMenu();
+                    ClientManager.showMainMenu();
                     String choice2 = scanner.nextLine();
                     out.writeObject(choice2);
                     //user chose to show the profile
                     if (choice2.equals("1")){
                         System.out.println((in.readObject()).toString());
-                        ClientUserManager.showProfileMenu();
+                        ClientManager.showProfileMenu();
                         String ans = scanner.nextLine();
                         out.writeObject(ans);
                         //user chose to edit personal info
                         if (ans.equals("1")) {
-                            ClientUserManager.addInfo(out, in);
+                            ClientManager.addInfo(out, in);
                         }
                         //user chose to see his/hers tweets
                         else if (ans.equals("2")){
-                            ClientUserManager.showTweet(in);
+                            ClientManager.showTweet(in);
                         }
                     }
                     //user chose to search for another user
                     else if (choice2.equals("2")){
                         User temp = new User(null, null);
-                        ClientUserManager.searchUser(out, in, temp);
+                        ClientManager.searchUser(out, in, temp);
                         //Show the options after you search for users
-                           ClientUserManager.showSearchMenu();
+                           ClientManager.showSearchMenu();
                            //get the option from the search menu
                             String ans = scanner.nextLine();
                             //give that option to the server
@@ -238,12 +238,12 @@ public class Client {
                             //user chose to follow one of the users in the list of the given users from the server
                             if (ans.equals("1")){
                                 //temp is the user who is followed
-                                ClientUserManager.follow(temp, out, in);
+                                ClientManager.follow(temp, out, in);
                             }
                         }
                     //user chose to add tweet
                     else if (choice2.equals("4")){
-                        ClientUserManager.addTweet(out,in);
+                        ClientManager.addTweet(out,in);
                     }
                     //user chose to exit from the main menu
                     else if (choice2.equals("5")){

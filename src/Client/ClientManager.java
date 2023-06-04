@@ -15,7 +15,6 @@ public class ClientManager {
     private static HashMap<String,String> countries = new HashMap<>();
     private static Scanner input = new Scanner(System.in);
     private static boolean flag = false;
-    //ArrayList<User> users = new ArrayList<>();
     public static void showMenu() {
         System.out.println("""
                 PLease choose an option :\s
@@ -228,8 +227,16 @@ public class ClientManager {
     }
     public static void follow(User user, ObjectOutputStream out, ObjectInputStream in){
         try {
+            //user is the user who you want to follow
             out.writeObject(user);
-            System.out.println(in.readObject());
+            //res is the answer sent from server that tells you if you can follow user or not
+            String res = in.readObject().toString();
+            if(res.equals("success")) {
+                System.out.println(in.readObject());
+            }
+            else {
+                System.out.println(res);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
