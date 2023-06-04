@@ -1,5 +1,7 @@
 package Model;
 
+import Server.ServerManager;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -77,10 +79,14 @@ public class User implements Serializable {
          }
         return true;
     }
-    public void follow(User user) {
-        //this follows user
-        this.followings.add(user);
-        user.followers.add(this);
+    public void follow(User temp) {
+        //this follows temp
+        this.followings.add(temp);
+        for(User user : ServerManager.getUsers().values()) {
+            if(temp.equals(user)) {
+                user.followers.add(this);
+            }
+        }
     }
 
     public ArrayList<User> getFollowers() {
