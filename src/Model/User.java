@@ -49,6 +49,7 @@ public class User implements Serializable {
     }
     public void setPersonalInfo(PersonalInfo personalInfo) {
         this.personalInfo =  personalInfo;
+        this.personalInfo.setUser(this);
     }
     public void tweet(Tweet tweet) {
         this.tweets.add(tweet);

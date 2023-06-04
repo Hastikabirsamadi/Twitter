@@ -4,14 +4,25 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class PersonalInfo implements Serializable {
+
+    private User user;
     private String website;
     private String location;
     private StringBuilder bio;
+
 
     public PersonalInfo(String website, String location, StringBuilder bio) {
         this.website = website;
         this.location = location;
         this.bio = bio;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getWebsite() {
@@ -38,6 +49,22 @@ public class PersonalInfo implements Serializable {
         this.bio = bio;
     }
 
+//    public int getFollowerSize() {
+//        return followerSize;
+//    }
+//
+//    public void setFollowerSize(int followerSize) {
+//        this.followerSize = followerSize;
+//    }
+//
+//    public int getFollowingSize() {
+//        return followingSize;
+//    }
+//
+//    public void setFollowingSize(int followingSize) {
+//        this.followingSize = followingSize;
+//    }
+
     @Override
     public String toString() {
         if(this.website.equals("exit")) {
@@ -51,6 +78,6 @@ public class PersonalInfo implements Serializable {
         }
         return "     PersonalInfo\n" + "-----------------------"+ "\n" + "bio : \n" + bio + "\n"
                 +"location : " + location + "\n" +
-                "website : " + website + "\n";
+                "website : " + website + "\n" + "Followers : " + user.getFollowers().size() + "  Followings : " + user.getFollowings().size();
     }
 }

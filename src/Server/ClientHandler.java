@@ -90,13 +90,11 @@ public class ClientHandler implements Runnable {
             }
             while (true) {
                 try {
-                    System.out.println("getting user's choice after sign in and sign up :)");
+                    System.out.println("getting user's choice after sign in or sign up :)");
                     userChoice = (String) in.readObject();
                     if(userChoice.equals("1")) {
                         System.out.println("user is editing personal info...");
                         out.writeObject(user.getPersonalInfo());
-                        out.writeObject(user.getFollowers().size());
-                        out.writeObject(user.getFollowings().size());
                         System.out.println("user's personal info is sent :)");
                         String answer = (String) in.readObject();
                         if(answer.equals("1")) {
@@ -115,9 +113,9 @@ public class ClientHandler implements Runnable {
                     }
                     else if(userChoice.equals("2")) {
                         System.out.println("user is searching...");
-                        String word = (String) in.readObject();
+                        String word = (String) in.readObject(); // receiving word to search
                         if(!word.equals("exit")) {
-                            out.writeObject(ServerUserManager.searchUser(word));
+                            out.writeObject(ServerUserManager.searchUser(word)); //sending an arraylist of found users for client
                             String searchChoice = (String) in.readObject();
                             if(searchChoice.equals("1")) {
                                 User temp = (User) in.readObject();
