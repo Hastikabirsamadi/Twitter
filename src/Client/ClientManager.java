@@ -193,37 +193,39 @@ public class ClientManager {
         }
     }
 
-    public static void searchUser(ObjectOutputStream out, ObjectInputStream in, User temp) throws IOException, ClassNotFoundException {
+    public static User searchUser(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException {
+        User temp;
         System.out.println("Enter an username or firstname or lastname to find it:");
         System.out.println("write 'exit' in the field to exit:");
         String word = input.nextLine();
         out.writeObject(word);
-        if (word.equals("exit")){
-            return;
+        if (!word.equals("exit")) {
+            ArrayList<User> foundUsers;
+            HashMap<String, User> foundUsers2 = new HashMap<>();
+            foundUsers = (ArrayList<User>) in.readObject();
+            for (int i = 0; i < foundUsers.size(); i++) {
+                foundUsers2.put(String.valueOf(i + 1), foundUsers.get(i));
+            }
+            if (foundUsers.size() == 0) {
+                System.out.println("Not Found!");
+            }
+            else {
+                int counter = 1;
+                for (User user : foundUsers) {
+                    System.out.println(counter + "- " + user.showSearchUser());
+                    counter++;
+                }
+                System.out.println("Please choose a user:");
+                System.out.println("write 'exit' in the field to exit:");
+                String choice = input.nextLine();
+                temp = foundUsers2.get(choice);
+                if (!choice.equals("exit")) {
+                    showProfile(foundUsers2.get(choice));
+                    return temp;
+                }
+            }
         }
-        ArrayList<User> foundUsers;
-        HashMap<String, User> foundUsers2 = new HashMap<>();
-        foundUsers = (ArrayList<User>) in.readObject();
-        for(int i = 0 ; i < foundUsers.size(); i++) {
-            foundUsers2.put(String.valueOf(i+1) , foundUsers.get(i));
-        }
-        if (foundUsers.size() == 0){
-            System.out.println("Not Found!");
-            return;
-        }
-        int counter = 1;
-        for (User user : foundUsers){
-            System.out.println(counter +"- "+ user.showSearchUser());
-            counter++;
-        }
-        System.out.println("Please choose a user:");
-        System.out.println("write 'exit' in the field to exit:");
-        String choice = input.nextLine();
-        temp = foundUsers2.get(choice);
-        if (choice.equals("exit")){
-            return;
-        }
-        showProfile(foundUsers2.get(choice));
+        return null;
     }
     public static void follow(User user, ObjectOutputStream out, ObjectInputStream in){
         try {

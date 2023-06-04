@@ -230,8 +230,7 @@ public class Client {
                     }
                     //user chose to search for another user
                     else if (choice2.equals("2")){
-                        User temp = new User(null, null);
-                        ClientManager.searchUser(out, in, temp);
+                        User temp = ClientManager.searchUser(out, in);
                         //Show the options after you search for users
                            ClientManager.showSearchMenu();
                            //get the option from the search menu
