@@ -241,7 +241,13 @@ public class Client {
                             if (ans.equals("1")){
                                 //temp is the user who is followed
                                 if(temp != null) {
-                                    ClientManager.follow(temp, out, in);
+                                    ClientManager.followOrUnfollow(temp, out, in);
+                                }
+                            }
+                            else if (ans.equals("2")){
+                                //temp is the user who is Unfollowed
+                                if(temp != null) {
+                                    ClientManager.followOrUnfollow(temp, out, in);
                                 }
                             }
                         }

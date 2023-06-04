@@ -227,7 +227,7 @@ public class ClientManager {
         }
         return null;
     }
-    public static void follow(User user, ObjectOutputStream out, ObjectInputStream in){
+    public static void followOrUnfollow(User user, ObjectOutputStream out, ObjectInputStream in){
         try {
             //user is the user who you want to follow
             out.writeObject(user);
