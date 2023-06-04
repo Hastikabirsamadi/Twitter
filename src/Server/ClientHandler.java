@@ -123,8 +123,8 @@ public class ClientHandler implements Runnable {
                                 User temp = (User) in.readObject();
                                 if(user.checkFollow(temp, out)) {
                                     user.follow(temp);
-                                    out.writeObject(temp.getUsername() + "is followed successfully");
-                                    System.out.println(temp.getUsername() + "is followed successfully :)");
+                                    out.writeObject(temp.getUsername() + " is followed successfully");
+                                    System.out.println(temp.getUsername() + " is followed successfully :)");
                                 }
                             }
                         }
