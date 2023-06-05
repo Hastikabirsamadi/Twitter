@@ -213,7 +213,7 @@ public class ClientManager {
 
     public static User searchUser(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException {
         User temp;
-        System.out.println("Enter an username or firstname or lastname to find it:");
+        System.out.println("Enter a username or firstname or lastname to find it:");
         System.out.println("write 'exit' in the field to exit:");
         String word = input.nextLine();
         out.writeObject(word);
@@ -221,12 +221,14 @@ public class ClientManager {
             ArrayList<User> foundUsers;
             HashMap<String, User> foundUsers2 = new HashMap<>();
             foundUsers = (ArrayList<User>) in.readObject();
-            for (int i = 0; i < foundUsers.size(); i++) {
-                foundUsers2.put(String.valueOf(i + 1), foundUsers.get(i));
-            }
             if (foundUsers.size() == 0) {
                 System.out.println("Not Found!");
+                out.writeObject("Not Found!");
             } else {
+                out.writeObject("ok");
+                for (int i = 0; i < foundUsers.size(); i++) {
+                    foundUsers2.put(String.valueOf(i + 1), foundUsers.get(i));
+                }
                 int counter = 1;
                 for (User user : foundUsers) {
                     System.out.println(counter + "- " + user.showSearchUser());
@@ -292,6 +294,7 @@ public class ClientManager {
         tweets = (ArrayList<Tweet>) in.readObject();
         if (tweets.size() == 0){
             System.out.println("No tweets found!!!");
+            out.writeObject("No tweets found!!!");
             return null;
         }
         else {
@@ -304,10 +307,12 @@ public class ClientManager {
             System.out.println("if you don't wanna see a profile write 'exit' :");
             String ans = input.nextLine();
             if (ans.equals("exit")){
+                out.writeObject("exit");
                 return null;
             }
             out.writeObject(tweets.get(Integer.parseInt(ans)-1));
             User temp = (User) in.readObject();
+            out.writeObject("ok");
             return temp;
         }
     }
