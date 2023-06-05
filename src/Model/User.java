@@ -60,25 +60,37 @@ public class User implements Serializable {
         this.tweets.add(tweet);
     }
 
+    public boolean checkSearch(User user, ObjectOutputStream out) {
+        try {
+            if (this.blackList.contains(user)) {
+                out.writeObject("You have been blocked by this user");
+                return false;
+            }
+            out.writeObject("success");
+            return true;
+        } catch (IOException e) {
+            System.out.println("IO Exception in check search method");
+            return false;
+        }
+    }
+
     public boolean checkFollow(User user, ObjectOutputStream out) {
+        try {
+            if (this.blackList.contains(user)) {
+                out.writeObject("You have been blocked by this user");
+                return false;
+            }
             for (User followedUser : this.followings) {
                 if (followedUser.equals(user)) {
-                    try {
-                        out.writeObject("You have already followed this user!");
-                        return false;
-                    }
-                    catch (IOException e) {
-                        System.out.println("IO Exception in check follow method");
-                        return false;
-                    }
+                    out.writeObject("You have already followed this user!");
+                    return false;
                 }
             }
-         try {
-             out.writeObject("success");
-         } catch (IOException e) {
-             System.out.println("IO Exception in check follow method");
-             return false;
-         }
+            out.writeObject("success");
+        } catch (IOException e) {
+            System.out.println("IO Exception in check follow method");
+            return false;
+        }
         return true;
     }
     public void follow(String tempUserUsername) {
@@ -93,6 +105,10 @@ public class User implements Serializable {
     }
     public boolean checkUnfollow(User user, ObjectOutputStream out) {
         try {
+            if (this.blackList.contains(user)) {
+                out.writeObject("You have been blocked by this user");
+                return false;
+            }
             for (User followedUser : followings) {
                 if (followedUser.equals(user)) {
                     out.writeObject("success");
@@ -120,7 +136,7 @@ public class User implements Serializable {
         try {
             for (User blockedUser : blackList) {
                 if (blockedUser.getUsername().equals(user.getUsername())) {
-                    out.writeObject("You have already blocked this user yet!");
+                    out.writeObject("You have already blocked this user!");
                     return false;
                 }
             }
@@ -134,7 +150,36 @@ public class User implements Serializable {
 
     public void block(String tempUserUsername) {
         //this blocks temp
+        for(User user : this.followings) {
+            if(tempUserUsername.equals(user.getUsername())) {
+                this.followings.remove(ServerManager.getUsers().get(tempUserUsername));
+            }
+        }
+        for(User user : ServerManager.getUsers().values()) {
+            if(tempUserUsername.equals(user.getUsername())) {
+                user.followers.remove(this);
+            }
+        }
         this.blackList.add(ServerManager.getUsers().get(tempUserUsername));
+    }
+    public boolean checkUnblock(User user, ObjectOutputStream out) {
+        try {
+            for (User blockedUser : blackList) {
+                if (blockedUser.getUsername().equals(user.getUsername())) {
+                    out.writeObject("success");
+                    return true;
+                }
+            }
+            out.writeObject("You haven't blocked this user yet!");
+            return false;
+        } catch (IOException e) {
+            System.out.println("IO Exception in check block method");
+            return true;
+        }
+    }
+    public void unblock(String tempUserUsername) {
+        //this unblocks temp
+        this.blackList.remove(ServerManager.getUsers().get(tempUserUsername));
     }
     public ArrayList<User> getFollowers() {
         return followers;
@@ -251,6 +296,29 @@ public class User implements Serializable {
         SignedIn = signedIn;
     }
 
+    public boolean isFaveStar() {
+        return faveStar;
+    }
+
+    public void setFaveStar(boolean faveStar) {
+        this.faveStar = faveStar;
+    }
+
+    public void setFollowers(ArrayList<User> followers) {
+        this.followers = followers;
+    }
+
+    public void setFollowings(ArrayList<User> followings) {
+        this.followings = followings;
+    }
+
+    public ArrayList<User> getBlackList() {
+        return blackList;
+    }
+
+    public void setBlackList(ArrayList<User> blackList) {
+        this.blackList = blackList;
+    }
 
     //For showing brief details in a list when you search for a user
     public String showSearchUser(){
