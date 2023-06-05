@@ -31,7 +31,7 @@ public class User implements Serializable {
     private ArrayList<Tweet> tweets = new ArrayList<>();
     private ArrayList<User> followers = new ArrayList<>();
     private ArrayList<User> followings = new ArrayList<>();
-    private ArrayList<User> blockedList = new ArrayList<>();
+    private ArrayList<User> blackList = new ArrayList<>();
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
                 String country, String birthDate) throws ParseException {
@@ -118,7 +118,7 @@ public class User implements Serializable {
     }
     public boolean checkBlock(User user, ObjectOutputStream out) {
         try {
-            for (User blockedUser : blockedList) {
+            for (User blockedUser : blackList) {
                 if (blockedUser.getUsername().equals(user.getUsername())) {
                     out.writeObject("You have already blocked this user yet!");
                     return false;
@@ -130,6 +130,11 @@ public class User implements Serializable {
             System.out.println("IO Exception in check block method");
             return true;
         }
+    }
+
+    public void block(String tempUserUsername) {
+        //this blocks temp
+        this.blackList.add(ServerManager.getUsers().get(tempUserUsername));
     }
     public ArrayList<User> getFollowers() {
         return followers;

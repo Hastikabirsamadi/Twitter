@@ -145,8 +145,16 @@ public class ClientHandler implements Runnable {
                                     System.out.println(temp.getUsername() + " is unfollowed successfully :)");
                                 }
                             }
+                            else if(searchChoice.equals("3")) { //block
+                                User temp = (User) in.readObject();
+                                User blockedPerson = ServerManager.getUsers().get(temp.getUsername());
+                                if(user.checkBlock(blockedPerson, out)) {
+                                    user.block(blockedPerson.getUsername());
+                                    out.writeObject(blockedPerson.getUsername() + " is blocked successfully");
+                                    System.out.println(blockedPerson.getUsername() + " is blocked successfully");
+                                }
+                            }
                         }
-                        break ;
                     }
                     else if(userChoice.equals("4")) {
                         System.out.println("user is adding a tweet...");
