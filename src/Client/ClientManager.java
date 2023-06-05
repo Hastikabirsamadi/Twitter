@@ -200,11 +200,13 @@ public class ClientManager {
         blacklists = (ArrayList<User>) in.readObject();
         if (blacklists.size() == 0){
             System.out.println("You haven't blocked anyone!");
-            return;
         }
         else {
+            System.out.println("Blacklist:");
+            int i = 1;
             for (User user : blacklists){
-                System.out.println(user.getUsername());
+                System.out.println(i + ". "+user.getUsername());
+                i++;
             }
         }
     }
