@@ -263,6 +263,10 @@ public class Client {
                             }
                         }
                     }
+                    //user chose timeline
+                    else if (choice2.equals("3")){
+                        ClientManager.timeline(in);
+                    }
                     //user chose to add tweet
                     else if (choice2.equals("4")){
                         ClientManager.addTweet(out,in);

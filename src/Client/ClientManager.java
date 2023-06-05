@@ -286,4 +286,12 @@ public class ClientManager {
             System.out.println(condition);
         }
     }
+
+    public static void timeline(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        ArrayList<Tweet> tweets = new ArrayList<>();
+        tweets = (ArrayList<Tweet>) in.readObject();
+        for (Tweet tweet : tweets){
+            System.out.println(tweet.toString());
+        }
+    }
 }
