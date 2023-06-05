@@ -1,5 +1,7 @@
 package Client;
 import Model.*;
+import Server.ServerManager;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -175,7 +177,7 @@ public class Client {
             outer:
             while (true) {
                 scanner = new Scanner(System.in);
-                client = new Socket("192.168.62.72", 9999);
+                client = new Socket("localhost", 9999);
                 out = new ObjectOutputStream(client.getOutputStream());
                 in = new ObjectInputStream(client.getInputStream());
                 clientMessageReceiver = new ClientMessageReceiver(in);
@@ -229,28 +231,27 @@ public class Client {
                         }
                     }
                     //user chose to search for another user
-                    else if (choice2.equals("2")){
+                    else if (choice2.equals("2")) {
                         User temp = ClientManager.searchUser(out, in);
-                        //Show the options after you search for users
-                           ClientManager.showSearchMenu();
-                           //get the option from the search menu
+                        if (temp != null) {
+                            System.out.println(temp.getUsername() + "  followers : " + temp.getFollowers().size() + "  followings : " + temp.getFollowings().size());
+                          //  ClientManager.showProfile(temp);
+                            //Show the options after you search for users
+                            ClientManager.showSearchMenu();
+                            //get the option from the search menu
                             String ans = scanner.nextLine();
                             //give that option to the server
                             out.writeObject(ans);
                             //user chose to follow one of the users in the list of the given users from the server
-                            if (ans.equals("1")){
+                            if (ans.equals("1")) {
                                 //temp is the user who is followed
-                                if(temp != null) {
-                                    ClientManager.followOrUnfollow(temp, out, in);
-                                }
-                            }
-                            else if (ans.equals("2")){
+                                ClientManager.followOrUnfollow(temp, out, in);
+                            } else if (ans.equals("2")) {
                                 //temp is the user who is Unfollowed
-                                if(temp != null) {
-                                    ClientManager.followOrUnfollow(temp, out, in);
-                                }
+                                ClientManager.followOrUnfollow(temp, out, in);
                             }
                         }
+                    }
                     //user chose to add tweet
                     else if (choice2.equals("4")){
                         ClientManager.addTweet(out,in);

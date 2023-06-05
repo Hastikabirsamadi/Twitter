@@ -59,7 +59,7 @@ public class User implements Serializable {
     }
 
     public boolean checkFollow(User user, ObjectOutputStream out) {
-            for (User followedUser : followings) {
+            for (User followedUser : this.followings) {
                 if (followedUser.equals(user)) {
                     try {
                         out.writeObject("You have already followed this user!");

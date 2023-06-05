@@ -24,7 +24,7 @@ public class ClientManager {
     }
 
     public static void showMainMenu(){
-        System.out.println("""
+        System.out.print("""
                 Please choose an option :\s
                 1.Profile
                 2.Search
@@ -35,7 +35,7 @@ public class ClientManager {
     }
 
     public static void showSearchMenu(){
-        System.out.println("""
+        System.out.print("""
                 Please choose an option :\s
                 1.Follow
                 2.Unfollow
@@ -46,10 +46,11 @@ public class ClientManager {
     }
 
     public static void showProfileMenu(){
-        System.out.println("""
+        System.out.print("""
                 Please choose an option :\s
                 1.Edit personal info
                 2.Show tweets
+                3.Exit
                 """);
     }
 
@@ -219,9 +220,22 @@ public class ClientManager {
                 System.out.println("write 'exit' in the field to exit:");
                 String choice = input.nextLine();
                 temp = foundUsers2.get(choice);
+                out.writeObject(temp);
+                User temp2;
+                temp2 = (User) in.readObject();
                 if (!choice.equals("exit")) {
-                    showProfile(foundUsers2.get(choice));
-                    return temp;
+                    System.out.println(temp2.getFirstName() + " " + temp2.getLastName() + "\n" +
+                            temp2.getUsername()+ "\n" + temp2.getPersonalInfo().toString() + "\n" +
+                            "Followers : "+ temp2.getFollowers().size() + "   " + "Following : " + temp2.getFollowings().size());
+                    if (temp2.getTweets().size() == 0){
+                        System.out.println("No tweets!");
+                    }
+                    else {
+                        for (Tweet tweet : temp2.getTweets()) {
+                            System.out.println(tweet.toString());
+                        }
+                    }
+                    return temp2;
                 }
             }
         }
@@ -247,16 +261,16 @@ public class ClientManager {
     }
 
     //For showing User's profile when you search and choose them
-    private static void showProfile(User user){
-        System.out.println(user.getFirstName() + " " + user.getLastName() + "\n" +
-                user.getUsername()+ "\n" + user.getPersonalInfo().toString() + "\n" +
-                "Followers : "+ user.getFollowers().size() + "   " + "Following : " + user.getFollowings().size());
-        if (user.getTweets().size() == 0){
-            System.out.println("No tweets!");
-            return;
-        }
-        for(Tweet tweet : user.getTweets()) {
-            System.out.println(tweet.toString());
-        }
+    public static void showProfile(User user){
+//        System.out.println(user.getFirstName() + " " + user.getLastName() + "\n" +
+//                user.getUsername()+ "\n" + user.getPersonalInfo().toString() + "\n" +
+//                "Followers : "+ user.getFollowers().size() + "   " + "Following : " + user.getFollowings().size());
+//        if (user.getTweets().size() == 0){
+//            System.out.println("No tweets!");
+//            return;
+//        }
+//        for(Tweet tweet : user.getTweets()) {
+//            System.out.println(tweet.toString());
+//        }
     }
 }

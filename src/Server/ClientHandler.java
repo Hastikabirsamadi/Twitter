@@ -90,6 +90,10 @@ public class ClientHandler implements Runnable {
             }
             while (true) {
                 try {
+                    System.out.println("this user is : " + user.getUsername());
+                    for(User user1 : ServerManager.getUsers().values()) {
+                        System.out.println(user1.getUsername() + "  followers : " + user1.getFollowers().size() + "  followings : " + user1.getFollowings().size());
+                    }
                     System.out.println("getting user's choice after sign in or sign up :)");
                     userChoice = (String) in.readObject();
                     if(userChoice.equals("1")) {
@@ -118,18 +122,24 @@ public class ClientHandler implements Runnable {
                         String word = (String) in.readObject(); // receiving word to search
                         if(!word.equals("exit")) {
                             out.writeObject(ServerManager.searchUser(word)); //sending an arraylist of found users for client
+                            User chosenUser = (User) in.readObject();// receiving the chosen person
+                            out.writeObject(ServerManager.getUsers().get(chosenUser.getUsername()));//sending the user from DB (hash map :))
+                            System.out.println(ServerManager.getUsers().get(chosenUser.getUsername()).getUsername() + "  followers : " + ServerManager.getUsers().get(chosenUser.getUsername()).getFollowers().size() +
+                                    "  followings : " + ServerManager.getUsers().get(chosenUser.getUsername()).getFollowings().size());
                             String searchChoice = (String) in.readObject();
                             if(searchChoice.equals("1")) { //follow
                                 User temp = (User) in.readObject();
-                                if(user.checkFollow(temp, out)) {
+                                User followedPerson = ServerManager.getUsers().get(temp.getUsername());
+                                if(user.checkFollow(followedPerson, out)) {
                                     user.follow(temp.getUsername());
-                                    out.writeObject(temp.getUsername() + " is followed successfully");
+                                    out.writeObject(followedPerson.getUsername() + " is followed successfully");
                                     System.out.println(temp.getUsername() + " is followed successfully :)");
                                 }
                             }
                             else if(searchChoice.equals("2")) { //unfollow
                                 User temp = (User) in.readObject();
-                                if(user.checkUnfollow(temp, out)) {
+                                User unfollowedPerson = ServerManager.getUsers().get(temp.getUsername());
+                                if(user.checkUnfollow(unfollowedPerson, out)) {
                                     user.unfollow(temp.getUsername());
                                     out.writeObject(temp.getUsername() + " is unfollowed successfully");
                                     System.out.println(temp.getUsername() + " is unfollowed successfully :)");
