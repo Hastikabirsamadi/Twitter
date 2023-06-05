@@ -229,13 +229,16 @@ public class Client {
                         else if (ans.equals("2")){
                             ClientManager.showTweet(in);
                         }
+                        //user chose to see his/hers blacklist
+                        else if (ans.equals("3")){
+                            ClientManager.showBlacklist(in);
+                        }
                     }
                     //user chose to search for another user
                     else if (choice2.equals("2")) {
                         User temp = ClientManager.searchUser(out, in);
                         if (temp != null) {
-                            System.out.println(temp.getUsername() + "  followers : " + temp.getFollowers().size() + "  followings : " + temp.getFollowings().size());
-                          //  ClientManager.showProfile(temp);
+                            ClientManager.showProfile(temp,in);
                             //Show the options after you search for users
                             ClientManager.showSearchMenu();
                             //get the option from the search menu
@@ -245,10 +248,18 @@ public class Client {
                             //user chose to follow one of the users in the list of the given users from the server
                             if (ans.equals("1")) {
                                 //temp is the user who is followed
-                                ClientManager.followOrUnfollow(temp, out, in);
+                                ClientManager.searchOptions(temp, out, in);
                             } else if (ans.equals("2")) {
                                 //temp is the user who is Unfollowed
-                                ClientManager.followOrUnfollow(temp, out, in);
+                                ClientManager.searchOptions(temp, out, in);
+                            }
+                            else if (ans.equals("3")){
+                                //temp is the user who is blocked
+                                ClientManager.searchOptions(temp, out, in);
+                            }
+                            else if (ans.equals("4")){
+                                //temp is the user who is unblocked
+                                ClientManager.searchOptions(temp, out, in);
                             }
                         }
                     }

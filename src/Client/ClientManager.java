@@ -50,7 +50,8 @@ public class ClientManager {
                 Please choose an option :\s
                 1.Edit personal info
                 2.Show tweets
-                3.Exit
+                3.Show blacklist
+                4.Exit
                 """);
     }
 
@@ -194,6 +195,20 @@ public class ClientManager {
         }
     }
 
+    public static void showBlacklist(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        ArrayList<User> blacklists = new ArrayList<>();
+        blacklists = (ArrayList<User>) in.readObject();
+        if (blacklists.size() == 0){
+            System.out.println("You haven't blocked anyone!");
+            return;
+        }
+        else {
+            for (User user : blacklists){
+                System.out.println(user.getUsername());
+            }
+        }
+    }
+
     public static User searchUser(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException {
         User temp;
         System.out.println("Enter an username or firstname or lastname to find it:");
@@ -209,8 +224,7 @@ public class ClientManager {
             }
             if (foundUsers.size() == 0) {
                 System.out.println("Not Found!");
-            }
-            else {
+            } else {
                 int counter = 1;
                 for (User user : foundUsers) {
                     System.out.println(counter + "- " + user.showSearchUser());
@@ -224,28 +238,17 @@ public class ClientManager {
                 User temp2;
                 temp2 = (User) in.readObject();
                 if (!choice.equals("exit")) {
-                    System.out.println(temp2.getFirstName() + " " + temp2.getLastName() + "\n" +
-                            temp2.getUsername()+ "\n" + temp2.getPersonalInfo().toString() + "\n" +
-                            "Followers : "+ temp2.getFollowers().size() + "   " + "Following : " + temp2.getFollowings().size());
-                    if (temp2.getTweets().size() == 0){
-                        System.out.println("No tweets!");
-                    }
-                    else {
-                        for (Tweet tweet : temp2.getTweets()) {
-                            System.out.println(tweet.toString());
-                        }
-                    }
                     return temp2;
                 }
             }
         }
         return null;
     }
-    public static void followOrUnfollow(User user, ObjectOutputStream out, ObjectInputStream in){
+    public static void searchOptions(User user, ObjectOutputStream out, ObjectInputStream in){
         try {
-            //user is the user who you want to follow
+            //user is the user who you want to follow or unfollow
             out.writeObject(user);
-            //res is the answer sent from server that tells you if you can follow user or not
+            //res is the answer sent from server that tells you if you can follow/unfollow user or not
             String res = in.readObject().toString();
             if(res.equals("success")) {
                 System.out.println(in.readObject());
@@ -260,17 +263,25 @@ public class ClientManager {
         }
     }
 
+
     //For showing User's profile when you search and choose them
-    public static void showProfile(User user){
-        System.out.println(user.getFirstName() + " " + user.getLastName() + "\n" +
-                user.getUsername()+ "\n" + user.getPersonalInfo().toString() + "\n" +
-                "Followers : "+ user.getFollowers().size() + "   " + "Following : " + user.getFollowings().size());
-        if (user.getTweets().size() == 0){
-            System.out.println("No tweets!");
-            return;
+    public static void showProfile(User user, ObjectInputStream in) throws IOException, ClassNotFoundException {
+        String condition = (String) in.readObject();
+        //for checking if user is blocked or not
+        if (condition.equals("success")) {
+            System.out.println(user.getFirstName() + " " + user.getLastName() + "\n" +
+                    user.getUsername() + "\n" + user.getPersonalInfo().toString() + "\n" +
+                    "Followers : " + user.getFollowers().size() + "   " + "Following : " + user.getFollowings().size());
+            if (user.getTweets().size() == 0) {
+                System.out.println("No tweets!");
+                return;
+            }
+            for (Tweet tweet : user.getTweets()) {
+                System.out.println(tweet.toString());
+            }
         }
-        for(Tweet tweet : user.getTweets()) {
-            System.out.println(tweet.toString());
+        else {
+            System.out.println(condition);
         }
     }
 }
