@@ -86,6 +86,8 @@ public class Tweet implements Serializable {
             this.currentTime = (LocalDate.now().getDayOfMonth()) + " " + (LocalDate.now().getMonth());
         }
         return "*********************************" + "\n" +
+                author.getUsername()+
+                "\n"+
                 body +
                 "\nlikes : "+likes +
                 "   retweets : " + retweets +

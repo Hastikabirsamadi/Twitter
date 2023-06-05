@@ -265,7 +265,32 @@ public class Client {
                     }
                     //user chose timeline
                     else if (choice2.equals("3")){
-                        ClientManager.timeline(in);
+                        User temp = ClientManager.timeline(in,out);
+                        if (temp!=null){
+                            ClientManager.showProfile(temp,in);
+                            //Show the options after you search for users
+                            ClientManager.showSearchMenu();
+                            //get the option from the search menu
+                            String ans = scanner.nextLine();
+                            //give that option to the server
+                            out.writeObject(ans);
+                            //user chose to follow one of the users in the list of the given users from the server
+                            if (ans.equals("1")) {
+                                //temp is the user who is followed
+                                ClientManager.searchOptions(temp, out, in);
+                            } else if (ans.equals("2")) {
+                                //temp is the user who is Unfollowed
+                                ClientManager.searchOptions(temp, out, in);
+                            }
+                            else if (ans.equals("3")){
+                                //temp is the user who is blocked
+                                ClientManager.searchOptions(temp, out, in);
+                            }
+                            else if (ans.equals("4")){
+                                //temp is the user who is unblocked
+                                ClientManager.searchOptions(temp, out, in);
+                            }
+                        }
                     }
                     //user chose to add tweet
                     else if (choice2.equals("4")){

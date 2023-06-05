@@ -287,11 +287,28 @@ public class ClientManager {
         }
     }
 
-    public static void timeline(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    public static User timeline(ObjectInputStream in, ObjectOutputStream out) throws IOException, ClassNotFoundException {
         ArrayList<Tweet> tweets = new ArrayList<>();
         tweets = (ArrayList<Tweet>) in.readObject();
-        for (Tweet tweet : tweets){
-            System.out.println(tweet.toString());
+        if (tweets.size() == 0){
+            System.out.println("No tweets found!!!");
+            return null;
+        }
+        else {
+            int cnt = 1;
+            for (Tweet tweet : tweets) {
+                System.out.println(cnt +". "+tweet.toString());
+                cnt++;
+            }
+            System.out.println("choose a number(user): ");
+            System.out.println("if you don't wanna see a profile write 'exit' :");
+            String ans = input.nextLine();
+            if (ans.equals("exit")){
+                return null;
+            }
+            out.writeObject(tweets.get(Integer.parseInt(ans)-1));
+            User temp = (User) in.readObject();
+            return temp;
         }
     }
 }
