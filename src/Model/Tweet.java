@@ -11,19 +11,23 @@ import java.util.Date;
 import java.time.ZoneId;
 
 public class Tweet implements Serializable {
+    private User author;
     private StringBuilder body;
     private int likes;
     private int retweets;
     private int comments;
+    private boolean faveStar;
     private LocalDateTime tweetTime;
     String currentTime;
 
-    public Tweet(StringBuilder body,int likes, int retweets, int comments) {
+    public Tweet(StringBuilder body,int likes, int retweets, int comments, User author) {
+        this.author = author;
         this.body = body;
         this.likes = likes;
         this.retweets = retweets;
         this.comments = comments;
         this.tweetTime = LocalDateTime.now();
+        this.faveStar = false;
     }
 
     public int getLikes() {
@@ -48,6 +52,22 @@ public class Tweet implements Serializable {
 
     public void setComments(int comments) {
         this.comments = comments;
+    }
+
+    public boolean isFaveStar() {
+        return faveStar;
+    }
+
+    public void setFaveStar(boolean faveStar) {
+        this.faveStar = faveStar;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     @Override

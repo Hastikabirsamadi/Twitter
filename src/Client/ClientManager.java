@@ -176,7 +176,7 @@ public class ClientManager {
             return;
         }
         out.writeObject("ok");
-        Tweet tweet = new Tweet(body, 0,0,0);
+        Tweet tweet = new Tweet(body, 0,0,0, null);
         out.writeObject(tweet);
         Thread.sleep(300);
         String res = (String) in.readObject();

@@ -173,16 +173,21 @@ public class ClientHandler implements Runnable {
                             }
                         }
                     }
+                    else if(userChoice.equals("3")) {
+                        System.out.println("showing timeline for " + user.getUsername());
+                        out.writeObject(user.timeline());
+                    }
                     else if(userChoice.equals("4")) {
                         System.out.println("user is adding a tweet...");
                         String ifExit = (String) in.readObject();
                         if(ifExit.equals("ok")) {
                             Tweet tweet = (Tweet) in.readObject();
+                            tweet.setAuthor(user);
                             user.tweet(tweet);
                             System.out.println("user '" + user.getUsername() + "' added tweet successfully");
                             out.writeObject("tweet added successfully!");
-//                            ServerManager.writeFile(ServerManager.getUsers());
-//                            ServerManager.readFile();
+                            ServerManager.writeTweetFile(ServerManager.getTweets());
+                            ServerManager.readTweetFile();
                         }
                     }
                     else if(userChoice.equals("5")) {

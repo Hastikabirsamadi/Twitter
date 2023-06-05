@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class ServerManager {
 
     private static HashMap<String, User> users = new HashMap<>();
+    private static ArrayList<Tweet> tweets = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
 
     public static void readFile() {
@@ -19,6 +20,17 @@ public class ServerManager {
             e.printStackTrace();
         } catch (FileNotFoundException | EOFException e) {
                System.out.println("No file found!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void readTweetFile() {
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream("tweets.bin"))) {
+            tweets = (ArrayList<Tweet>) objectInputStream.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException | EOFException e) {
+            System.out.println("No file found!");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -33,6 +45,17 @@ public class ServerManager {
        catch(IOException e) {
            e.printStackTrace();
        }
+    }
+    public static void writeTweetFile(ArrayList<Tweet> tweets) {
+        try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("tweets.bin"))) {
+            objectOutputStream.writeObject(tweets);
+        }
+        catch(FileNotFoundException e ) {
+            System.out.println("no tweets!");
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
     }
     private static boolean checkUserNameDuplication(String userName) {
         return !users.containsKey(userName);
@@ -134,12 +157,19 @@ public class ServerManager {
         }
         return foundUsers;
     }
-
     public static HashMap<String, User> getUsers() {
         return users;
     }
 
     public static void setUsers(HashMap<String, User> users) {
         ServerManager.users = users;
+    }
+
+    public static ArrayList<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public static void setTweets(ArrayList<Tweet> tweets) {
+        ServerManager.tweets = tweets;
     }
 }

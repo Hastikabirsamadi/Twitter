@@ -57,6 +57,7 @@ public class User implements Serializable {
         this.personalInfo =  personalInfo;
     }
     public void tweet(Tweet tweet) {
+        ServerManager.getTweets().add(tweet);
         this.tweets.add(tweet);
     }
 
@@ -181,6 +182,17 @@ public class User implements Serializable {
     public void unblock(String tempUserUsername) {
         //this unblocks temp
         this.blackList.remove(ServerManager.getUsers().get(tempUserUsername));
+    }
+    public ArrayList<Tweet> timeline() {
+        ArrayList<Tweet> foundTweets = new ArrayList<>();
+        for(Tweet tweet : ServerManager.getTweets()) {
+          for(User user : this.followings) {
+              if(tweet.getAuthor().getUsername().equals(user.getUsername()) || tweet.isFaveStar()) {
+                  foundTweets.add(tweet);
+              }
+          }
+        }
+        return foundTweets;
     }
     public ArrayList<User> getFollowers() {
         return followers;
