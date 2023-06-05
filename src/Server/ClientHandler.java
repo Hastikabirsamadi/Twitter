@@ -106,8 +106,8 @@ public class ClientHandler implements Runnable {
                                 user.setPersonalInfo(info);
                                 System.out.println("user '" + user.getUsername() + "' changed their personal info");
                                 out.writeObject("Personal info edited successfully!");
-                                ServerManager.writeFile(ServerManager.getUsers());
-                                ServerManager.readFile();
+//                                ServerManager.writeFile(ServerManager.getUsers());
+//                                ServerManager.readFile();
                             }
                         }
                         else if(answer.equals("2")) {
@@ -135,8 +135,8 @@ public class ClientHandler implements Runnable {
                                         user.follow(temp.getUsername());
                                         out.writeObject(followedPerson.getUsername() + " is followed successfully");
                                         System.out.println(temp.getUsername() + " is followed successfully :)");
-                                        ServerManager.writeFile(ServerManager.getUsers());
-                                        ServerManager.readFile();
+//                                        ServerManager.writeFile(ServerManager.getUsers());
+//                                        ServerManager.readFile();
                                     }
                                 } else if (searchChoice.equals("2")) { //unfollow
                                     User temp = (User) in.readObject();
@@ -145,8 +145,8 @@ public class ClientHandler implements Runnable {
                                         user.unfollow(temp.getUsername());
                                         out.writeObject(temp.getUsername() + " is unfollowed successfully");
                                         System.out.println(temp.getUsername() + " is unfollowed successfully :)");
-                                        ServerManager.writeFile(ServerManager.getUsers());
-                                        ServerManager.readFile();
+//                                        ServerManager.writeFile(ServerManager.getUsers());
+//                                        ServerManager.readFile();
                                     }
                                 } else if (searchChoice.equals("3")) { //block
                                     User temp = (User) in.readObject();
@@ -155,19 +155,19 @@ public class ClientHandler implements Runnable {
                                         user.block(blockedPerson.getUsername());
                                         out.writeObject(blockedPerson.getUsername() + " is blocked successfully");
                                         System.out.println(blockedPerson.getUsername() + " is blocked successfully");
-                                        ServerManager.writeFile(ServerManager.getUsers());
-                                        ServerManager.readFile();
+//                                        ServerManager.writeFile(ServerManager.getUsers());
+//                                        ServerManager.readFile();
                                     }
                                 }
                                 else if(searchChoice.equals("4")) { //unblock
                                     User temp = (User) in.readObject();
                                     User unblockedPerson = ServerManager.getUsers().get(temp.getUsername());
-                                    if (user.checkBlock(unblockedPerson, out)) {
-                                        user.block(unblockedPerson.getUsername());
+                                    if (user.checkUnblock(unblockedPerson, out)) {
+                                        user.unblock(unblockedPerson.getUsername());
                                         out.writeObject(unblockedPerson.getUsername() + " is unblocked successfully");
                                         System.out.println(unblockedPerson.getUsername() + " is unblocked successfully");
-                                        ServerManager.writeFile(ServerManager.getUsers());
-                                        ServerManager.readFile();
+//                                        ServerManager.writeFile(ServerManager.getUsers());
+//                                        ServerManager.readFile();
                                     }
                                 }
                             }
@@ -181,13 +181,13 @@ public class ClientHandler implements Runnable {
                             user.tweet(tweet);
                             System.out.println("user '" + user.getUsername() + "' added tweet successfully");
                             out.writeObject("tweet added successfully!");
-                            ServerManager.writeFile(ServerManager.getUsers());
-                            ServerManager.readFile();
+//                            ServerManager.writeFile(ServerManager.getUsers());
+//                            ServerManager.readFile();
                         }
                     }
                     else if(userChoice.equals("5")) {
-                        ServerManager.writeFile(ServerManager.getUsers());
-                        ServerManager.readFile();
+//                        ServerManager.writeFile(ServerManager.getUsers());
+//                        ServerManager.readFile();
                         break;
                     }
                 } catch (ClassNotFoundException e) {
