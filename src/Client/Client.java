@@ -177,7 +177,7 @@ public class Client {
             outer:
             while (true) {
                 scanner = new Scanner(System.in);
-                client = new Socket("localhost", 9999);
+                client = new Socket("192.168.62.72", 9999);
                 out = new ObjectOutputStream(client.getOutputStream());
                 in = new ObjectInputStream(client.getInputStream());
                 clientMessageReceiver = new ClientMessageReceiver(in);

@@ -155,8 +155,8 @@ public class User implements Serializable {
                 this.followings.remove(ServerManager.getUsers().get(tempUserUsername));
             }
         }
-        for(User user : ServerManager.getUsers().values()) {
-            if(tempUserUsername.equals(user.getUsername())) {
+        for(User user : ServerManager.getUsers().get(tempUserUsername).getFollowers()) {
+            if(this.getUsername().equals(user.getUsername())) {
                 user.followers.remove(this);
             }
         }
