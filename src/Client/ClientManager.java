@@ -262,15 +262,15 @@ public class ClientManager {
 
     //For showing User's profile when you search and choose them
     public static void showProfile(User user){
-//        System.out.println(user.getFirstName() + " " + user.getLastName() + "\n" +
-//                user.getUsername()+ "\n" + user.getPersonalInfo().toString() + "\n" +
-//                "Followers : "+ user.getFollowers().size() + "   " + "Following : " + user.getFollowings().size());
-//        if (user.getTweets().size() == 0){
-//            System.out.println("No tweets!");
-//            return;
-//        }
-//        for(Tweet tweet : user.getTweets()) {
-//            System.out.println(tweet.toString());
-//        }
+        System.out.println(user.getFirstName() + " " + user.getLastName() + "\n" +
+                user.getUsername()+ "\n" + user.getPersonalInfo().toString() + "\n" +
+                "Followers : "+ user.getFollowers().size() + "   " + "Following : " + user.getFollowings().size());
+        if (user.getTweets().size() == 0){
+            System.out.println("No tweets!");
+            return;
+        }
+        for(Tweet tweet : user.getTweets()) {
+            System.out.println(tweet.toString());
+        }
     }
 }

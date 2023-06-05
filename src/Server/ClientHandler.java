@@ -146,6 +146,7 @@ public class ClientHandler implements Runnable {
                                 }
                             }
                         }
+                        break ;
                     }
                     else if(userChoice.equals("4")) {
                         System.out.println("user is adding a tweet...");
