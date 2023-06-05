@@ -26,10 +26,12 @@ public class User implements Serializable {
     private Date lastModificationDate;
     private boolean SignedUp;
     private boolean SignedIn;
+    private boolean faveStar;
     private PersonalInfo personalInfo;
     private ArrayList<Tweet> tweets = new ArrayList<>();
     private ArrayList<User> followers = new ArrayList<>();
     private ArrayList<User> followings = new ArrayList<>();
+    private ArrayList<User> blockedList = new ArrayList<>();
 
     public User(String username, String password, String firstName, String lastName, String email, String phoneNumber,
                 String country, String birthDate) throws ParseException {
@@ -112,6 +114,21 @@ public class User implements Serializable {
                 user.followers.remove(this);
                 return;
             }
+        }
+    }
+    public boolean checkBlock(User user, ObjectOutputStream out) {
+        try {
+            for (User blockedUser : blockedList) {
+                if (blockedUser.getUsername().equals(user.getUsername())) {
+                    out.writeObject("You have already blocked this user yet!");
+                    return false;
+                }
+            }
+            out.writeObject("success");
+            return true;
+        } catch (IOException e) {
+            System.out.println("IO Exception in check block method");
+            return true;
         }
     }
     public ArrayList<User> getFollowers() {
