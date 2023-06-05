@@ -176,6 +176,50 @@ public class ClientHandler implements Runnable {
                     else if(userChoice.equals("3")) {
                         System.out.println("showing timeline for " + user.getUsername());
                         out.writeObject(user.timeline());
+                        Tweet tempTweet = (Tweet) in.readObject();
+                        out.writeObject(ServerManager.getUsers().get(tempTweet.getAuthor().getUsername()));
+                        String searchChoice = (String) in.readObject();
+                        if (searchChoice.equals("1")) { //follow
+                            User temp = (User) in.readObject();
+                            User followedPerson = ServerManager.getUsers().get(temp.getUsername());
+                            if (user.checkFollow(followedPerson, out)) {
+                                user.follow(temp.getUsername());
+                                out.writeObject(followedPerson.getUsername() + " is followed successfully");
+                                System.out.println(temp.getUsername() + " is followed successfully :)");
+//                                        ServerManager.writeFile(ServerManager.getUsers());
+//                                        ServerManager.readFile();
+                            }
+                        } else if (searchChoice.equals("2")) { //unfollow
+                            User temp = (User) in.readObject();
+                            User unfollowedPerson = ServerManager.getUsers().get(temp.getUsername());
+                            if (user.checkUnfollow(unfollowedPerson, out)) {
+                                user.unfollow(temp.getUsername());
+                                out.writeObject(temp.getUsername() + " is unfollowed successfully");
+                                System.out.println(temp.getUsername() + " is unfollowed successfully :)");
+//                                        ServerManager.writeFile(ServerManager.getUsers());
+//                                        ServerManager.readFile();
+                            }
+                        } else if (searchChoice.equals("3")) { //block
+                            User temp = (User) in.readObject();
+                            User blockedPerson = ServerManager.getUsers().get(temp.getUsername());
+                            if (user.checkBlock(blockedPerson, out)) {
+                                user.block(blockedPerson.getUsername());
+                                out.writeObject(blockedPerson.getUsername() + " is blocked successfully");
+                                System.out.println(blockedPerson.getUsername() + " is blocked successfully");
+//                                        ServerManager.writeFile(ServerManager.getUsers());
+//                                        ServerManager.readFile();
+                            }
+                        } else if (searchChoice.equals("4")) { //unblock
+                            User temp = (User) in.readObject();
+                            User unblockedPerson = ServerManager.getUsers().get(temp.getUsername());
+                            if (user.checkUnblock(unblockedPerson, out)) {
+                                user.unblock(unblockedPerson.getUsername());
+                                out.writeObject(unblockedPerson.getUsername() + " is unblocked successfully");
+                                System.out.println(unblockedPerson.getUsername() + " is unblocked successfully");
+//                                        ServerManager.writeFile(ServerManager.getUsers());
+//                                        ServerManager.readFile();
+                            }
+                        }
                     }
                     else if(userChoice.equals("4")) {
                         System.out.println("user is adding a tweet...");
