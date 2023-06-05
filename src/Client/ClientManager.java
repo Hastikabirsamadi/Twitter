@@ -248,7 +248,7 @@ public class ClientManager {
     }
     public static void searchOptions(User user, ObjectOutputStream out, ObjectInputStream in){
         try {
-            //user is the user who you want to follow or unfollow
+            //user is the user who you want to follow or unfollow or block or unblock
             out.writeObject(user);
             //res is the answer sent from server that tells you if you can follow/unfollow user or not
             String res = in.readObject().toString();
