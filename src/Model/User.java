@@ -152,7 +152,8 @@ public class User implements Serializable {
         //this blocks temp
         for(User user : this.followings) {
             if(tempUserUsername.equals(user.getUsername())) {
-                this.followings.remove(ServerManager.getUsers().get(tempUserUsername));
+                this.followings.remove(user);
+                break;
             }
         }
         for(User user : ServerManager.getUsers().get(tempUserUsername).getFollowers()) {
